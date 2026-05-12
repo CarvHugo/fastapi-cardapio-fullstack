@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from typing import Optional
 import os
 
-from banco_de_dados import garantir_tabela_produtos, buscar_produtos, cadastra_produtos, tenta_delecao
+from banco_de_dados import garantir_tabela_produtos, buscar_produtos, cadastra_produtos, tenta_delecao, consulta_produto
 
 app = FastAPI()
 
@@ -111,21 +111,9 @@ async def atualizar_produto(id: int, produtopatch: ProdutoPatch, x_api_key: str 
     
 @app.get("/produtos/{id}")
 async def consultar_produto(id: int):
-    conexao = sqlite3.connect("cardapio.db")
-    cursor = conexao.cursor()
+    produto = consulta_produto(id)
     
-    cursor.execute("SELECT nome, categoria, preco FROM produtos WHERE id = ?;", (id,))
-    produto = cursor.fetchone()
+    if produto is None:
+        raise HTTPException(status_code=404, detail=f'Produto de ID {id} não encontrado!')
     
-    if produto:
-        nome, categoria, preco = produto
-        dados = {}
-        
-        dados['Nome'] = nome
-        dados['Categoria'] = categoria
-        dados['Preço'] = preco
-        
-        return dados
-    
-    else:
-        raise HTTPException(status_code=404, detail=f'Número de ID {id} não encontrado!')
+    return produto

@@ -123,7 +123,7 @@ def consultar_produto(id):
     except RequestException:
         return ('\033[31mOcorreu um erro! Tente novamente\033[m')
     
-    if resposta.status_code in (200, 300):
+    if resposta.status_code in range(200, 300):
         produto = resposta.json()
         
         return produto

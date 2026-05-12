@@ -59,3 +59,23 @@ def tenta_delecao(id):
     
     conexao.close()
     return None
+
+
+def consulta_produto(id):
+    conexao = sqlite3.connect("cardapio.db")
+    cursor = conexao.cursor()
+    
+    cursor.execute("SELECT nome, categoria, preco FROM produtos WHERE id = ?;", (id,))
+    produto = cursor.fetchone()
+    
+    if produto:
+        nome, categoria, preco = produto
+        dados = {}
+        
+        dados['Nome'] = nome
+        dados['Categoria'] = categoria
+        dados['Preço'] = preco
+        
+        return dados
+    
+    return None
