@@ -1,50 +1,94 @@
 # FastAPI Cardápio Fullstack
 
-Projeto de gerenciamento de cardápio desenvolvido com Python e FastAPI.
+[![Frontend Online](https://img.shields.io/badge/Frontend-Online-success?style=for-the-badge)](https://site-cardapio-iqmd.onrender.com)
+[![API Docs](https://img.shields.io/badge/API-Docs-blue?style=for-the-badge)](https://fastapi-cardapio-api.onrender.com/docs)
 
-A aplicação começou como um projeto de estudos voltado para desenvolvimento web e evoluiu para uma estrutura fullstack integrada, contendo:
+Projeto fullstack de gerenciamento de cardápio desenvolvido com Python, FastAPI, SQLite, HTML e CSS.
 
-- API REST com FastAPI;
-- CLI para interação com o sistema;
-- Banco de dados SQLite;
-- Deploy online;
-- Autenticação básica via API Key;
-- Operações completas de CRUD.
+A aplicação evoluiu de um projeto de estudos para uma arquitetura composta por três camadas integradas:
 
-O objetivo do projeto é aplicar conceitos reais de desenvolvimento backend, organização de código, integração entre sistemas e arquitetura de APIs.
+* Frontend Web para apresentação do restaurante;
+* API REST para gerenciamento de produtos;
+* CLI administrativa para consumo e gerenciamento da API.
+
+O projeto foi desenvolvido com o objetivo de aplicar conceitos práticos de desenvolvimento fullstack, integração cliente-servidor, persistência de dados, autenticação, deploy e organização de código.
 
 ---
 
-# Tecnologias utilizadas
+# Demonstração
 
-- Python
-- FastAPI
-- SQLite3
-- Requests
-- Uvicorn
-- Render
+## Frontend Web
+
+Acesse a aplicação online:
+
+https://site-cardapio-iqmd.onrender.com
+
+## API REST
+
+Documentação interativa da API:
+
+https://fastapi-cardapio-api.onrender.com/docs
+
+
+> **Observação:** A API está hospedada no plano gratuito do Render e pode levar alguns segundos para inicializar após períodos de inatividade. Caso o cardápio não carregue imediatamente, aguarde alguns instantes e recarregue a página.
+---
+
+# Tecnologias Utilizadas
+
+## Frontend
+
+* HTML5
+* CSS3
+
+## Backend
+
+* Python
+* FastAPI
+* SQLite3
+* Requests
+* Uvicorn
+
+## Infraestrutura
+
+* Render
+* Git
+* GitHub
 
 ---
 
 # Funcionalidades
 
+## Frontend Web
+
+* Página inicial do restaurante;
+* Página de cardápio;
+* Página institucional;
+* Navegação entre páginas;
+* Hospedagem online via Render.
+
 ## API REST
-- Cadastro de produtos;
-- Listagem de produtos;
-- Busca de produto por ID;
-- Atualização parcial de produtos (PATCH);
-- Deleção de produtos;
+
+* Cadastro de produtos;
+* Listagem de produtos;
+* Consulta de produto por ID;
+* Atualização parcial de produtos (PATCH);
+* Exclusão de produtos.
 
 ## Segurança
-- Autenticação via API Key em endpoints protegidos;
 
-## CLI
-- Integração da aplicação de terminal com a API;
-- Consumo de endpoints HTTP utilizando Requests;
+* Autenticação via API Key em endpoints protegidos.
+
+## CLI Administrativa
+
+* Cadastro de produtos;
+* Consulta de produtos;
+* Atualização de produtos;
+* Exclusão de produtos;
+* Consumo de endpoints HTTP utilizando Requests.
 
 ---
 
-# Estrutura do projeto
+# Estrutura do Projeto
 
 ```text
 fastapi-cardapio-api/
@@ -58,21 +102,21 @@ fastapi-cardapio-api/
 ├── requirements.txt
 ├── cardapio.db
 │
-├── css/
-├── imagens/
-│
-├── index.html
-├── cardapio.html
-├── historia.html
+├── frontend/
+│   ├── css/
+│   ├── imagens/
+│   ├── index.html
+│   ├── cardapio.html
+│   └── historia.html
 │
 └── README.md
 ```
 
 ---
 
-# Como executar a cli
+# Como Executar a CLI
 
-**Obs**: API já está hospedada online no Render, portanto não é necessário executar o servidor FastAPI localmente para utilizar a CLI.
+**Obs:** A API encontra-se hospedada online no Render. Não é necessário executar o servidor FastAPI localmente para utilizar a CLI.
 
 ### 1. Clone o repositório
 
@@ -81,18 +125,34 @@ git clone https://github.com/CarvHugo/fastapi-cardapio-api
 ```
 
 ### 2. Instale as dependências
-### No powershell
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Configure a chave de API para realizar CRUD
-### No powershell
-```bash
+### 3. Configure a variável de ambiente da API Key
+
+PowerShell:
+
+```powershell
 $env:API_KEY="nidhogg2026"
 ```
 
 ### 4. Execute a CLI
+
 ```bash
 python cli.py
 ```
+
+---
+
+# Objetivos de Aprendizado
+
+* Desenvolvimento de APIs REST com FastAPI;
+* Operações CRUD;
+* Banco de dados relacionais;
+* Integração cliente-servidor;
+* Autenticação via API Key;
+* Refatoração e organização de código;
+* Deploy de aplicações;
+* Desenvolvimento Fullstack.
