@@ -39,8 +39,15 @@ class ProdutoPatch(BaseModel):
 
 
 @app.get("/produtos")
-async def listar_produtos(nome: str = None):
-    produtos = buscar_produtos(nome)
+async def listar_produtos(nome: str = None, categoria: str = None):
+    if nome:
+        produtos = buscar_produtos(nome=nome)
+    
+    elif categoria:
+        produtos = buscar_produtos(categoria=categoria)
+    
+    else:
+        produtos = buscar_produtos()
     
     lista_produtos = []
     
