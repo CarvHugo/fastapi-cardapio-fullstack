@@ -20,14 +20,18 @@ def buscar_produtos(nome=None, categoria=None):
     conexao = sqlite3.connect("cardapio.db")
     cursor = conexao.cursor()
     
-    if nome:
+    if nome and categoria:
+        cursor.execute("SELECT id, nome, categoria, preco FROM produtos WHERE nome LIKE ? AND categoria LIKE ?", ('%' + nome + '%', '%' + categoria + '%',))
+        produtos = cursor.fetchall()
+        
+    elif nome:
         cursor.execute('SELECT id, nome, categoria, preco FROM produtos WHERE nome LIKE ?', ('%' + nome + '%',))
         produtos = cursor.fetchall()
         
     elif categoria:
         cursor.execute('SELECT id, nome, categoria, preco FROM produtos WHERE categoria LIKE ?', ('%' + categoria + '%',))
         produtos = cursor.fetchall()
-        
+    
     else:
         cursor.execute("SELECT id, nome, categoria, preco FROM produtos;")
         produtos = cursor.fetchall()
