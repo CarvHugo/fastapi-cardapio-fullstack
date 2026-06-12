@@ -16,9 +16,13 @@ def garantir_tabela_produtos():
     conexao.commit()
     conexao.close()
 
-def buscar_produtos(nome=None, categoria=None):
+def buscar_produtos(nome=None, categoria=None, ordenar=None):
     conexao = sqlite3.connect("cardapio.db")
     cursor = conexao.cursor()
+    
+    if ordenar:
+        cursor.execute("SELECT id, nome, categoria, preco FROM produtos ORDER BY preco;")
+        cursor.fecthall()
     
     if nome and categoria:
         cursor.execute("SELECT id, nome, categoria, preco FROM produtos WHERE nome LIKE ? AND categoria LIKE ?", ('%' + nome + '%', '%' + categoria + '%',))
