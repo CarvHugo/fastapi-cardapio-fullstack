@@ -20,11 +20,11 @@ def buscar_produtos(nome=None, categoria=None, ordenar=None):
     conexao = sqlite3.connect("cardapio.db")
     cursor = conexao.cursor()
     
-    if ordenar:
-        cursor.execute("SELECT id, nome, categoria, preco FROM produtos ORDER BY preco;")
-        cursor.fecthall()
+    if ordenar == "nome":
+        cursor.execute("SELECT id, nome, categoria, preco FROM produtos ORDER BY nome")
+        produtos = cursor.fetchall()
     
-    if nome and categoria:
+    elif nome and categoria:
         cursor.execute("SELECT id, nome, categoria, preco FROM produtos WHERE nome LIKE ? AND categoria LIKE ?", ('%' + nome + '%', '%' + categoria + '%',))
         produtos = cursor.fetchall()
         
