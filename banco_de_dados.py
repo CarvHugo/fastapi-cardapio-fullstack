@@ -20,25 +20,35 @@ def buscar_produtos(nome=None, categoria=None, ordenar=None):
     conexao = sqlite3.connect("cardapio.db")
     cursor = conexao.cursor()
     
+    query = "SELECT id, nome, categoria, preco FROM produtos"
+    
+    condicoes = []
+    
+    parametros = []
+    
+    if nome:
+        condicoes.append("nome LIKE ?")
+        parametros.append(f"%{nome}%")
+    
+    if categoria:
+        condicoes.append("categoria LIKE ?")
+        parametros.append(f"%{categoria}%")
+        
+    if condicoes:
+        query += " WHERE " + " AND ".join(condicoes)
+    
     if ordenar == "nome":
-        cursor.execute("SELECT id, nome, categoria, preco FROM produtos ORDER BY nome")
-        produtos = cursor.fetchall()
-    
-    elif nome and categoria:
-        cursor.execute("SELECT id, nome, categoria, preco FROM produtos WHERE nome LIKE ? AND categoria LIKE ?", ('%' + nome + '%', '%' + categoria + '%',))
-        produtos = cursor.fetchall()
+        query += " ORDER BY nome;"
         
-    elif nome:
-        cursor.execute('SELECT id, nome, categoria, preco FROM produtos WHERE nome LIKE ?', ('%' + nome + '%',))
-        produtos = cursor.fetchall()
+    elif ordenar == "categoria":
+        query += " ORDER BY categoria;"
         
-    elif categoria:
-        cursor.execute('SELECT id, nome, categoria, preco FROM produtos WHERE categoria LIKE ?', ('%' + categoria + '%',))
-        produtos = cursor.fetchall()
+    elif ordenar == "preco":
+        query += " ORDER BY preco;"
+        
+    cursor.execute(query, parametros)
     
-    else:
-        cursor.execute("SELECT id, nome, categoria, preco FROM produtos;")
-        produtos = cursor.fetchall()
+    produtos = cursor.fetchall()
     
     conexao.close()
     
