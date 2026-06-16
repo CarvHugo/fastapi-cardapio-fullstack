@@ -6,14 +6,17 @@
     <title>Cardápio</title>
 </head>
 <body onload="buscar()">
-
+    
     <h1>Cardápio</h1>
 
-    <div id="cardapio"></div>
+    <input type="text" id="campo-busca">
+    <button>Buscar</button>
 
+    <div id="cardapio"></div>
+    
     <script>
         async function buscar() {
-            const resposta = await fetch("https://fastapi-cardapio-api.onrender.com/produtos");
+            const resposta = await fetch("http://127.0.0.1:8000/produtos");
             const dados = await resposta.json();
 
             const div = document.getElementById("cardapio");
