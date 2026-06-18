@@ -10,7 +10,18 @@
     <h1>Cardápio</h1>
 
     <input type="text" id="campo-busca">
-    <button>Buscar</button>
+    <button onclick="busca_personalizada()">Buscar</button>
+
+    <script>
+        async function busca_personalizada() {
+            const campo = document.getElementById("campo-busca")
+            const nome = campo.value
+
+            const resposta = await fetch(`http://127.0.0.1:8000/produtos?nome=${nome}`)
+            const dados = await resposta.json()
+            console.log(dados)
+        }
+    </script>
 
     <div id="cardapio"></div>
     
