@@ -9,18 +9,47 @@
     
     <h1>Cardápio</h1>
 
-    <input type="text" id="campo-busca">
-    <button onclick="busca_personalizada()">Buscar</button>
+    <input
+    type="text"
+    id="campo-busca"
+    onkeydown="pressionouEnter(event)"
+    >
 
+    <button onclick="busca_personalizada()">
+        Buscar
+    </button>
+    
+    
     <script>
+
+        function pressionouEnter(event) {
+            if (event.key === "Enter") {
+                busca_personalizada()
+            }
+        }
+
         async function busca_personalizada() {
             const campo = document.getElementById("campo-busca")
             const nome = campo.value
 
             const resposta = await fetch(`http://127.0.0.1:8000/produtos?nome=${nome}`)
             const dados = await resposta.json()
-            console.log(dados)
+
+            const div = document.getElementById("cardapio");
+            div.innerHTML = "";
+
+            dados.forEach(item => {
+                div.innerHTML += `
+                    <p>
+                        <strong>${item.nome}</strong><br>
+                        Categoria: ${item.categoria}<br>
+                        Preço: R$ ${Number(item.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    </p>
+                `
+            })
+
         }
+
     </script>
 
     <div id="cardapio"></div>
