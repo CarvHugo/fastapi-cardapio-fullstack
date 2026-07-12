@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
     <title>Cardápio</title>
 </head>
 <body onload="buscar()">
@@ -40,11 +41,19 @@
 
             dados.forEach(item => {
                 div.innerHTML += `
-                    <p>
-                        <strong>${item.nome}</strong><br>
-                        Categoria: ${item.categoria}<br>
-                        Preço: R$ ${Number(item.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                    </p>
+                    <div class="produto">
+                        <p>
+                            <strong>${item.nome}</strong><br>
+
+                                Categoria: ${item.categoria}<br>
+
+                                Preço:
+                                R$ ${Number(item.preco).toLocaleString(
+                                    "pt-BR",
+                                    { minimumFractionDigits: 2 }
+                                )}
+                        </p>
+                    </div>
                 `
             })
 
@@ -64,12 +73,20 @@
 
             dados.forEach(item => {
                 div.innerHTML += `
-                    <p>
-                        <strong>${item.nome}</strong><br>
-                        Categoria: ${item.categoria}<br>
-                        Preço: R$ ${Number(item.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                    </p>
-                `;
+                    <div class="produto">
+                        <p> 
+                            <strong>${item.nome}</strong><br>
+
+                                Categoria: ${item.categoria}<br>
+
+                                Preço:
+                                R$ ${Number(item.preco).toLocaleString(
+                                    "pt-BR",
+                                    { minimumFractionDigits: 2 }
+                                )}
+                        </p>
+                    </div>
+                `   
             });
         }
     </script>
