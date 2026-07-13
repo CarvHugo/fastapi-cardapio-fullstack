@@ -8,9 +8,10 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     margin: 0;
     padding: 0;
-    height: 100%;
+    min-height: 100vh;
 }
 
 main {
@@ -28,8 +29,20 @@ img.capa {
 }
 
 .produto {
-    background-color: rgba(255, 255, 255, 0.9);
+    width: 275px;
+    background-color: rgba(248, 238, 238, 0.6);
     padding: 15px;
     margin: 15px;
     border-radius: 10px;
+}
+
+.produto img{
+    width: 250px;
+    height: 200px;
+    border-radius: 10px;
+}
+
+.imagem-produto {
+    display: block;
+    margin: auto;
 }
