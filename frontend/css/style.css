@@ -31,18 +31,38 @@ img.capa {
 .produto {
     width: 275px;
     background-color: rgba(248, 238, 238, 0.6);
-    padding: 15px;
+    padding: 25px;
     margin: 15px;
     border-radius: 10px;
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.3);
 }
 
-.produto img{
+.produto img {
     width: 250px;
     height: 200px;
     border-radius: 10px;
 }
 
+.produto:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
 .imagem-produto {
     display: block;
     margin: auto;
+}
+
+.nome-produto {
+    font-size: 25px;
+}
+
+.preco-produto {
+    color: rgb(5, 75, 5)
+}
+
+#cardapio {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 45px;
+    justify-content: center;
 }

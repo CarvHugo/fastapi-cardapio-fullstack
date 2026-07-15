@@ -77,15 +77,19 @@
                     <div class="produto">
                         <img class="imagem-produto" src="imagens/produtos/spaghetti1.jpg">
                         <p> 
-                            <strong>${item.nome}</strong><br>
-
+                            <div class="nome-produto">
+                                ${item.nome}
+                            </div>
+                            
                                 Categoria: ${item.categoria}<br>
-
+                            
+                            <div class="preco-produto">
                                 Preço:
                                 R$ ${Number(item.preco).toLocaleString(
                                     "pt-BR",
                                     { minimumFractionDigits: 2 }
                                 )}
+                            </div>
                         </p>
                     </div>
                 `   
