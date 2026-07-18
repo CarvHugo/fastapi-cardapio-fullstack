@@ -73,8 +73,29 @@
             div.innerHTML = "";
 
             dados.forEach(item => {
-                console.log(item.categoria)
-            })
+                if (item.categoria === "Massas") {
+                    div.innerHTML += `
+                        <h2>Massas</h2>
+                        <div class="categoria">
+                            <div class="produto">
+                                <img class="imagem-produto" src="imagens/produtos/spaghetti1.jpg">
+                                
+                                <p>
+
+                                <div class="categoria">
+                                    <p>
+                                        <strong>${item.nome}</strong><br>
+
+                                        Preço:
+                                        R$ ${Number(item.preco).toLocaleString(
+                                            "pt-BR",
+                                            { minimumFractionDigits: 2 }
+                                        )}
+                                    </p>
+                                </div>
+                    `;
+                }
+            });
         }
     </script>
 
