@@ -22,7 +22,6 @@
         Buscar
     </button>
     
-    
     <script>
 
         function pressionouEnter(event) {
@@ -41,23 +40,27 @@
             const div = document.getElementById("cardapio");
             div.innerHTML = "";
 
+            div.innerHTML = `
+                <div class="categoria"></div>
+            `;
+
+            const categoria = document.querySelector(".categoria");
+
             dados.forEach(item => {
-                div.innerHTML += `
-                    <div class="produto">
-                        <img class="imagem-produto" src="imagens/produtos/spaghetti1.jpg">
-                        <p>
-                            <strong>${item.nome}</strong><br>
+                categoria.innerHTML += `
+                        <div class="produto">
+                            <img class="imagem-produto" src="imagens/produtos/spaghetti1.jpg">
+                            <p>
+                                <strong>${item.nome}</strong><br>
 
-                                Categoria: ${item.categoria}<br>
-
-                                Preço:
-                                R$ ${Number(item.preco).toLocaleString(
-                                    "pt-BR",
-                                    { minimumFractionDigits: 2 }
-                                )}
-                        </p>
-                    </div>
-                `
+                                    Preço:
+                                    R$ ${Number(item.preco).toLocaleString(
+                                        "pt-BR",
+                                        { minimumFractionDigits: 2 }
+                                    )}
+                            </p>
+                        </div>
+                `   
             })
 
         }
@@ -74,36 +77,50 @@
             const div = document.getElementById("cardapio");
             div.innerHTML = "";
 
-            div.innerHTML = `
-                <h2 class="titulo">
-                    Massas
-                </h2>
-                
-                <div class="categoria"></div>
-            `;
-
-            const categoria = document.querySelector(".categoria");
-
             dados.forEach(item => {
-                if (item.categoria === "Massas") {
-                    categoria.innerHTML += `
-                        <div class="produto">
-                            <img class="imagem-produto" src="imagens/produtos/spaghetti1.jpg">
-                            
-                            <p>
-                                <strong>${item.nome}</strong><br>
+                let categoria = document.getElementById(`categoria-${item.categoria}`);
 
-                                Preço:
-                                R$ ${Number(item.preco).toLocaleString(
-                                    "pt-BR",
-                                    { minimumFractionDigits: 2 }
-                                )}
-                            </p>
+                if (categoria === null) {
+                    div.innerHTML += `
+                        <h2 class="titulo">
+                            ${item.categoria}
+                        </h2>
+
+                        <div class="categoria" id="categoria-${item.categoria}">
+                    
+                            <div class="produto">
+                                <img class="imagem-produto" src="imagens/produtos/spaghetti1.jpg">
+                                
+                                <p>
+                                    <strong>${item.nome}</strong><br>
+
+                                    Preço:
+                                    R$ ${Number(item.preco).toLocaleString(
+                                        "pt-BR",
+                                        { minimumFractionDigits: 2 }
+                                    )}
+                                </p>
+                            </div>
                         </div>
                     `;  
                 }
-                else if (item.categoria === "Pizzas") {
-                    categoria.innerHTML += ``
+                
+                else {
+                    categoria.innerHTML += `
+                        <div class="produto">
+                                <img class="imagem-produto" src="imagens/produtos/spaghetti1.jpg">
+                                
+                                <p>
+                                    <strong>${item.nome}</strong><br>
+
+                                    Preço:
+                                    R$ ${Number(item.preco).toLocaleString(
+                                        "pt-BR",
+                                        { minimumFractionDigits: 2 }
+                                    )}
+                                </p>
+                        </div>
+                    `
                 }
             });
         }
