@@ -73,31 +73,36 @@
             div.innerHTML = "";
 
             div.innerHTML = `
-                <h2>Massas</h2>
+                <h2 class="titulo">
+                    Massas
+                </h2>
+                
                 <div class="categoria"></div>
             `;
 
+            const categoria = document.querySelector(".categoria");
+
             dados.forEach(item => {
                 if (item.categoria === "Massas") {
-                    div.innerHTML += `
-                        <div class="categoria">
-                            <div class="produto">
-                                <img class="imagem-produto" src="imagens/produtos/spaghetti1.jpg">
-                                
-                                <p>
+                    categoria.innerHTML += `
+                        <div class="produto">
+                            <img class="imagem-produto" src="imagens/produtos/spaghetti1.jpg">
+                            
+                            <p>
 
-                                <div class="categoria">
-                                    <p>
-                                        <strong>${item.nome}</strong><br>
+                                <strong>${item.nome}</strong><br>
 
-                                        Preço:
-                                        R$ ${Number(item.preco).toLocaleString(
-                                            "pt-BR",
-                                            { minimumFractionDigits: 2 }
-                                        )}
-                                    </p>
-                                </div>
-                    `;
+                                Preço:
+                                R$ ${Number(item.preco).toLocaleString(
+                                    "pt-BR",
+                                    { minimumFractionDigits: 2 }
+                                )}
+                            </p>
+                        </div>
+                    `;  
+                }
+                else if (item.categoria === "Pizzas") {
+                    categoria.innerHTML += ``
                 }
             });
         }

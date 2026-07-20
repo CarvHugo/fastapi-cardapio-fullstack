@@ -28,6 +28,10 @@ img.capa {
     height : auto;
 }
 
+#cardapio {
+    width: 100%;
+}
+
 .produto {
     width: 275px;
     background-color: rgba(248, 238, 238, 0.6);
@@ -60,9 +64,17 @@ img.capa {
     color: rgb(5, 75, 5)
 }
 
-#cardapio {
+.categoria {
     display: flex;
     flex-wrap: wrap;
     gap: 45px;
     justify-content: center;
+}
+
+.titulo {
+    font-size: 50px;
+    text-align: center;
+    font-weight: bold;
+    background-color: rgba(248, 238, 238, 0.6);
+
 }
