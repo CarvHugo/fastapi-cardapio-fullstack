@@ -8,9 +8,10 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     margin: 0;
     padding: 0;
-    height: 100%;
+    min-height: 100vh;
 }
 
 main {
@@ -25,4 +26,63 @@ img.capa {
     display: block;
     max-width: 100%;
     height : auto;
+}
+
+#cardapio {
+    width: 100%;
+}
+
+.produto {
+    width: 275px;
+    background-color: rgba(248, 238, 238, 0.6);
+    padding: 25px;
+    margin: 15px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.3);
+}
+
+.produto img {
+    width: 250px;
+    height: 200px;
+    border-radius: 10px;
+}
+
+.produto:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.imagem-produto {
+    display: block;
+    margin: auto;
+}
+
+.nome-produto {
+    font-size: 25px;
+}
+
+.preco-produto {
+    color: rgb(5, 75, 5)
+}
+
+.categoria {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 45px;
+    justify-content: center;
+}
+
+.titulo {
+    font-size: 40px;
+    text-align: center;
+    font-weight: bold;
+    background-color: rgba(248, 238, 238, 0.6);
+
+}
+
+.cabecalho {
+    font-size: 50px;
+    text-align: center;
+    font-weight: bold;
+    background-color: rgba(248, 238, 238, 0.6);
+    padding: 25px;
 }

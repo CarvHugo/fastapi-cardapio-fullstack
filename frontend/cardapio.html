@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
     <title>Cardápio</title>
 </head>
 <body onload="buscar()">
     
-    <h1>Cardápio</h1>
+    <h1 class="cabecalho">
+        Cardápio
+    </h1>
 
     <input
     type="text"
@@ -18,7 +21,6 @@
     <button onclick="busca_personalizada()">
         Buscar
     </button>
-    
     
     <script>
 
@@ -38,14 +40,27 @@
             const div = document.getElementById("cardapio");
             div.innerHTML = "";
 
+            div.innerHTML = `
+                <div class="categoria"></div>
+            `;
+
+            const categoria = document.querySelector(".categoria");
+
             dados.forEach(item => {
-                div.innerHTML += `
-                    <p>
-                        <strong>${item.nome}</strong><br>
-                        Categoria: ${item.categoria}<br>
-                        Preço: R$ ${Number(item.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                    </p>
-                `
+                categoria.innerHTML += `
+                        <div class="produto">
+                            <img class="imagem-produto" src="imagens/produtos/spaghetti1.jpg">
+                            <p>
+                                <strong>${item.nome}</strong><br>
+
+                                    Preço:
+                                    R$ ${Number(item.preco).toLocaleString(
+                                        "pt-BR",
+                                        { minimumFractionDigits: 2 }
+                                    )}
+                            </p>
+                        </div>
+                `   
             })
 
         }
@@ -63,13 +78,50 @@
             div.innerHTML = "";
 
             dados.forEach(item => {
-                div.innerHTML += `
-                    <p>
-                        <strong>${item.nome}</strong><br>
-                        Categoria: ${item.categoria}<br>
-                        Preço: R$ ${Number(item.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                    </p>
-                `;
+                let categoria = document.getElementById(`categoria-${item.categoria}`);
+
+                if (categoria === null) {
+                    div.innerHTML += `
+                        <h2 class="titulo">
+                            ${item.categoria}
+                        </h2>
+
+                        <div class="categoria" id="categoria-${item.categoria}">
+                    
+                            <div class="produto">
+                                <img class="imagem-produto" src="imagens/produtos/spaghetti1.jpg">
+                                
+                                <p>
+                                    <strong>${item.nome}</strong><br>
+
+                                    Preço:
+                                    R$ ${Number(item.preco).toLocaleString(
+                                        "pt-BR",
+                                        { minimumFractionDigits: 2 }
+                                    )}
+                                </p>
+                            </div>
+                        </div>
+                    `;  
+                }
+                
+                else {
+                    categoria.innerHTML += `
+                        <div class="produto">
+                                <img class="imagem-produto" src="imagens/produtos/spaghetti1.jpg">
+                                
+                                <p>
+                                    <strong>${item.nome}</strong><br>
+
+                                    Preço:
+                                    R$ ${Number(item.preco).toLocaleString(
+                                        "pt-BR",
+                                        { minimumFractionDigits: 2 }
+                                    )}
+                                </p>
+                        </div>
+                    `
+                }
             });
         }
     </script>
