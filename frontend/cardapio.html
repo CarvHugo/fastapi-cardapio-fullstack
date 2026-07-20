@@ -72,10 +72,14 @@
             const div = document.getElementById("cardapio");
             div.innerHTML = "";
 
+            div.innerHTML = `
+                <h2>Massas</h2>
+                <div class="categoria"></div>
+            `;
+
             dados.forEach(item => {
                 if (item.categoria === "Massas") {
                     div.innerHTML += `
-                        <h2>Massas</h2>
                         <div class="categoria">
                             <div class="produto">
                                 <img class="imagem-produto" src="imagens/produtos/spaghetti1.jpg">
