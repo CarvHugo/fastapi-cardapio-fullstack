@@ -21,7 +21,7 @@ def buscar_produtos(nome=None, categoria=None, ordenar=None):
     conexao = sqlite3.connect("cardapio.db")
     cursor = conexao.cursor()
     
-    query = "SELECT id, nome, categoria, preco FROM produtos"
+    query = "SELECT id, nome, categoria, preco, imagem FROM produtos"
     
     condicoes = []
     

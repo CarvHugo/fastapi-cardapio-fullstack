@@ -30,12 +30,14 @@ class Produto(BaseModel):
     nome: str
     categoria: str
     preco: float
+    imagem: str
     
     
 class ProdutoPatch(BaseModel):
     nome: Optional[str] = None
     categoria: Optional[str] = None
     preco: Optional[float] = None
+    imagem: Optional[str] = None
 
 
 @app.get("/produtos")
@@ -49,7 +51,8 @@ async def listar_produtos(nome: str = None, categoria: str = None, ordenar: str 
             "id": coluna[0],
             "nome": coluna[1],
             "categoria": coluna[2],
-            "preco": coluna[3]
+            "preco": coluna[3],
+            "imagem": coluna[4]
         })
 
     return lista_produtos
