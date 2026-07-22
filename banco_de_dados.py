@@ -9,7 +9,8 @@ def garantir_tabela_produtos():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT NOT NULL,
         categoria TEXT NOT NULL,
-        preco REAL NOT NULL
+        preco REAL NOT NULL,
+        imagem TEXT NOT NULL
     );
     """)
     
