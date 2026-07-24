@@ -64,7 +64,7 @@ async def cadastro_de_produtos(produto: Produto, x_api_key: str = Header()):
     if not produto.nome or not produto.categoria or produto.preco <= 0:
         raise HTTPException(status_code=422, detail="Ocorreu um erro com a validação dos dados! Digite dados válidos para cadastro.")
     
-    produto = cadastra_produtos(produto.nome, produto.categoria, produto.preco)
+    produto = cadastra_produtos(produto.nome, produto.categoria, produto.preco, produto.imagem)
     
     return produto
 
