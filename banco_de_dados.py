@@ -9,7 +9,8 @@ def garantir_tabela_produtos():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         nome TEXT NOT NULL,
         categoria TEXT NOT NULL,
-        preco REAL NOT NULL
+        preco REAL NOT NULL,
+        imagem TEXT NOT NULL
     );
     """)
     
@@ -20,7 +21,7 @@ def buscar_produtos(nome=None, categoria=None, ordenar=None):
     conexao = sqlite3.connect("cardapio.db")
     cursor = conexao.cursor()
     
-    query = "SELECT id, nome, categoria, preco FROM produtos"
+    query = "SELECT id, nome, categoria, preco, imagem FROM produtos"
     
     condicoes = []
     
@@ -54,20 +55,31 @@ def buscar_produtos(nome=None, categoria=None, ordenar=None):
     
     return produtos
 
-def cadastra_produtos(nome, categoria, preco):
+def cadastra_produtos(nome, categoria, preco, imagem=None):
     nome = nome.strip()
     categoria = categoria.strip()
+    if imagem:
+        imagem = imagem.strip()
     
-    if nome != "" and categoria != "" and preco > 0:
-        conexao = sqlite3.connect("cardapio.db")
-        cursor = conexao.cursor()
-        
-        cursor.execute("INSERT INTO produtos (nome, categoria, preco) VALUES (?, ?, ?)", (nome, categoria, preco))
+    conexao = sqlite3.connect("cardapio.db")
+    cursor = conexao.cursor()
+    
+    if nome != "" and categoria != "" and preco > 0 and imagem:
+        cursor.execute("INSERT INTO produtos (nome, categoria, preco, imagem) VALUES (?, ?, ?, ?)", (nome, categoria, preco, imagem))
 
         conexao.commit()
         conexao.close()
 
+        return nome, categoria, preco, imagem
+    
+    elif nome != "" and categoria != "" and preco > 0 and not imagem:
+        cursor.execute("INSERT INTO produtos (nome, categoria, preco) VALUES (?, ?, ?)", (nome, categoria, preco))
+        
+        conexao.commit()
+        conexao.close()
+        
         return nome, categoria, preco
+    
     
 def tenta_delecao(id):
     conexao = sqlite3.connect("cardapio.db")
@@ -75,7 +87,6 @@ def tenta_delecao(id):
     
     cursor.execute("SELECT * FROM produtos WHERE id = ?", (id,))
     verificador_de_linha = cursor.fetchone()
-    print(verificador_de_linha)
 
     if verificador_de_linha is not None:
         cursor.execute("DELETE FROM produtos WHERE id = ?", (id,))
@@ -107,28 +118,28 @@ def consulta_produto(id):
     
     return None
 
-def atualiza_produto(id, nome=None, categoria=None, preco=None):
+def atualiza_produto(id, nome=None, categoria=None, preco=None, imagem=None):
     conexao = sqlite3.connect("cardapio.db")
     cursor = conexao.cursor()
     
-    informacoes_dos_produtos = (nome, categoria, preco)
+    informacoes_dos_produtos = (nome, categoria, preco, imagem)
     
-    if informacoes_dos_produtos.count(None) == 3:
+    if informacoes_dos_produtos.count(None) == 4:
         conexao.close()
         return None
     
     linhas_afetadas = 0
     
-    variavel_da_query_sql = ["nome", "categoria", "preco"]
+    variavel_da_query_sql = ["nome", "categoria", "preco", "imagem"]
         
     for contador, dado in enumerate(informacoes_dos_produtos):
-        try:
-            if dado is not None:
-                cursor.execute(f"UPDATE produtos SET {variavel_da_query_sql[contador]} = ? WHERE id = ?", (dado, id))
-                linhas_afetadas += cursor.rowcount
-        
-        except:
-            continue
+        if dado is not None:
+            cursor.execute(f"""
+                           UPDATE produtos
+                           SET {variavel_da_query_sql[contador]} = ?
+                           WHERE id = ?
+                           """, (dado, id))
+            linhas_afetadas += cursor.rowcount
 
     if linhas_afetadas == 0:
         conexao.close()
