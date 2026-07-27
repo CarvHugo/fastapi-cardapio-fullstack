@@ -58,12 +58,13 @@ def buscar_produtos(nome=None, categoria=None, ordenar=None):
 def cadastra_produtos(nome, categoria, preco, imagem=None):
     nome = nome.strip()
     categoria = categoria.strip()
-    imagem = imagem.strip()
+    if imagem:
+        imagem = imagem.strip()
     
     conexao = sqlite3.connect("cardapio.db")
     cursor = conexao.cursor()
     
-    if nome != "" and categoria != "" and preco > 0 and imagem == True:
+    if nome != "" and categoria != "" and preco > 0 and imagem:
         cursor.execute("INSERT INTO produtos (nome, categoria, preco, imagem) VALUES (?, ?, ?, ?)", (nome, categoria, preco, imagem))
 
         conexao.commit()
@@ -71,7 +72,7 @@ def cadastra_produtos(nome, categoria, preco, imagem=None):
 
         return nome, categoria, preco, imagem
     
-    elif nome != "" and categoria != "" and preco > 0 and imagem == None:
+    elif nome != "" and categoria != "" and preco > 0 and not imagem:
         cursor.execute("INSERT INTO produtos (nome, categoria, preco) VALUES (?, ?, ?)", (nome, categoria, preco))
         
         conexao.commit()
@@ -117,28 +118,28 @@ def consulta_produto(id):
     
     return None
 
-def atualiza_produto(id, nome=None, categoria=None, preco=None):
+def atualiza_produto(id, nome=None, categoria=None, preco=None, imagem=None):
     conexao = sqlite3.connect("cardapio.db")
     cursor = conexao.cursor()
     
-    informacoes_dos_produtos = (nome, categoria, preco)
+    informacoes_dos_produtos = (nome, categoria, preco, imagem)
     
-    if informacoes_dos_produtos.count(None) == 3:
+    if informacoes_dos_produtos.count(None) == 4:
         conexao.close()
         return None
     
     linhas_afetadas = 0
     
-    variavel_da_query_sql = ["nome", "categoria", "preco"]
+    variavel_da_query_sql = ["nome", "categoria", "preco", "imagem"]
         
     for contador, dado in enumerate(informacoes_dos_produtos):
-        try:
-            if dado is not None:
-                cursor.execute(f"UPDATE produtos SET {variavel_da_query_sql[contador]} = ? WHERE id = ?", (dado, id))
-                linhas_afetadas += cursor.rowcount
-        
-        except:
-            continue
+        if dado is not None:
+            cursor.execute(f"""
+                           UPDATE produtos
+                           SET {variavel_da_query_sql[contador]} = ?
+                           WHERE id = ?
+                           """, (dado, id))
+            linhas_afetadas += cursor.rowcount
 
     if linhas_afetadas == 0:
         conexao.close()

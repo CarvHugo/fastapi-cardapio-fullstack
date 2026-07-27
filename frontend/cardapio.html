@@ -49,7 +49,7 @@
             dados.forEach(item => {
                 categoria.innerHTML += `
                         <div class="produto">
-                            <img class="imagem-produto" src="imagens/produtos/spaghetti1.jpg">
+                            <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
                             <p>
                                 <strong>${item.nome}</strong><br>
 
@@ -89,7 +89,7 @@
                         <div class="categoria" id="categoria-${item.categoria}">
                     
                             <div class="produto">
-                                <img class="imagem-produto" src="imagens/produtos/spaghetti1.jpg">
+                                <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
                                 
                                 <p>
                                     <strong>${item.nome}</strong><br>
@@ -108,7 +108,7 @@
                 else {
                     categoria.innerHTML += `
                         <div class="produto">
-                                <img class="imagem-produto" src="imagens/produtos/spaghetti1.jpg">
+                                <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
                                 
                                 <p>
                                     <strong>${item.nome}</strong><br>

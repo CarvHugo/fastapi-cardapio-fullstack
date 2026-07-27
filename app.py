@@ -83,7 +83,7 @@ async def delecao_de_produtos(id: int, x_api_key: str = Header()):
 async def atualizar_produto(id: int, produtopatch: ProdutoPatch, x_api_key: str = Header()):
     valida_api_key(x_api_key)
     
-    atualizacao = atualiza_produto(id, produtopatch.nome, produtopatch.categoria, produtopatch.preco)
+    atualizacao = atualiza_produto(id, produtopatch.nome, produtopatch.categoria, produtopatch.preco, produtopatch.imagem)
     
     if atualizacao == None:
         raise HTTPException(status_code=422, detail="É necessário fornecer algum dado para atualização!")
