@@ -34,11 +34,20 @@
             const campo = document.getElementById("campo-busca")
             const nome = campo.value
 
-            const resposta = await fetch(`https://fastapi-cardapio-api.onrender.com/produtos?nome=${nome}`)
+            const resposta = await fetch(`http://127.0.0.1:8000/produtos?nome=${nome}`)
             const dados = await resposta.json()
 
             const div = document.getElementById("cardapio");
             div.innerHTML = "";
+            
+            if (dados.length === 0) {
+                div.innerHTML = `
+                <p>
+                <div class="erro">
+                    <p>Não foi possível encontrar o alimento "${nome}".</p>
+                </div>`
+                return;
+            }
 
             div.innerHTML = `
                 <div class="categoria"></div>
@@ -71,11 +80,16 @@
     
     <script>
         async function buscar() {
-            const resposta = await fetch("https://fastapi-cardapio-api.onrender.com/produtos");
+            const resposta = await fetch("http://127.0.0.1:8000/produtos");
             const dados = await resposta.json();
 
             const div = document.getElementById("cardapio");
             div.innerHTML = "";
+
+            if (dados.length === 0) {
+                div.innerHTML = "<p>Não foi possível carregar o cardápio. Tente novamente em 40 segundos.</p>";
+                return;
+            }
 
             dados.forEach(item => {
                 let categoria = document.getElementById(`categoria-${item.categoria}`);
