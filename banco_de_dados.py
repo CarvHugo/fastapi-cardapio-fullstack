@@ -124,18 +124,18 @@ def consulta_produto(id):
     conexao = sqlite3.connect("cardapio.db")
     cursor = conexao.cursor()
     
-    cursor.execute("SELECT * FROM produtos WHERE id = ?;", (id,))
+    cursor.execute("SELECT nome, categoria, preco, imagem, descricao FROM produtos WHERE id = ?;", (id,))
     produto = cursor.fetchone()
     
     if produto:
         nome, categoria, preco, imagem, descricao = produto
         dados = {}
         
-        dados['Nome'] = nome
-        dados['Categoria'] = categoria
-        dados['Preço'] = preco
-        dados['Imagem'] = imagem
-        dados['Descrição'] = descricao
+        dados['nome'] = nome
+        dados['categoria'] = categoria
+        dados['preco'] = preco
+        dados['imagem'] = imagem
+        dados['descricao'] = descricao
         
         return dados
     
