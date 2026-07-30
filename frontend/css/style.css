@@ -94,3 +94,7 @@ img.capa {
     display: inline-block;
     color: red;
 }
+
+.descricao-produto {
+    font-size: 15px;
+}
