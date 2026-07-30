@@ -1,5 +1,5 @@
 import sqlite3
-
+    
 def garantir_tabela_produtos():
     conexao = sqlite3.connect("cardapio.db")
     cursor = conexao.cursor()
@@ -10,6 +10,7 @@ def garantir_tabela_produtos():
         nome TEXT NOT NULL,
         categoria TEXT NOT NULL,
         preco REAL NOT NULL,
+        descricao TEXT NOT NULL,
         imagem TEXT NOT NULL
     );
     """)
@@ -21,7 +22,7 @@ def buscar_produtos(nome=None, categoria=None, ordenar=None):
     conexao = sqlite3.connect("cardapio.db")
     cursor = conexao.cursor()
     
-    query = "SELECT id, nome, categoria, preco, imagem FROM produtos"
+    query = "SELECT id, nome, categoria, preco, imagem, descricao FROM produtos"
     
     condicoes = []
     
@@ -55,24 +56,44 @@ def buscar_produtos(nome=None, categoria=None, ordenar=None):
     
     return produtos
 
-def cadastra_produtos(nome, categoria, preco, imagem=None):
+def cadastra_produtos(nome, categoria, preco, imagem=None, descricao=None):
     nome = nome.strip()
     categoria = categoria.strip()
+    
     if imagem:
         imagem = imagem.strip()
+        
+    if descricao:
+        descricao = descricao.strip()
     
     conexao = sqlite3.connect("cardapio.db")
     cursor = conexao.cursor()
     
-    if nome != "" and categoria != "" and preco > 0 and imagem:
-        cursor.execute("INSERT INTO produtos (nome, categoria, preco, imagem) VALUES (?, ?, ?, ?)", (nome, categoria, preco, imagem))
+    if nome != "" and categoria != "" and preco > 0 and imagem and descricao:
+        cursor.execute("INSERT INTO produtos (nome, categoria, preco, imagem, descricao) VALUES (?, ?, ?, ?, ?)", (nome, categoria, preco, imagem, descricao))
 
         conexao.commit()
         conexao.close()
 
+        return nome, categoria, preco, imagem, descricao
+    
+    elif nome != "" and categoria != "" and preco > 0 and imagem and not descricao:
+        cursor.execute("INSERT INTO produtos (nome, categoria, preco, imagem) VALUES (?, ?, ?, ?)", (nome, categoria, preco, imagem))
+        
+        conexao.commit()
+        conexao.close()
+        
         return nome, categoria, preco, imagem
     
-    elif nome != "" and categoria != "" and preco > 0 and not imagem:
+    elif nome != "" and categoria != "" and preco > 0 and not imagem and descricao:
+            cursor.execute("INSERT INTO produtos (nome, categoria, preco, descricao) VALUES (?, ?, ?, ?)", (nome, categoria, preco, descricao))
+            
+            conexao.commit()
+            conexao.close()
+            
+            return nome, categoria, preco, descricao
+    
+    elif nome != "" and categoria != "" and preco > 0 and not imagem and not descricao:
         cursor.execute("INSERT INTO produtos (nome, categoria, preco) VALUES (?, ?, ?)", (nome, categoria, preco))
         
         conexao.commit()
@@ -103,34 +124,36 @@ def consulta_produto(id):
     conexao = sqlite3.connect("cardapio.db")
     cursor = conexao.cursor()
     
-    cursor.execute("SELECT nome, categoria, preco FROM produtos WHERE id = ?;", (id,))
+    cursor.execute("SELECT nome, categoria, preco, imagem, descricao FROM produtos WHERE id = ?;", (id,))
     produto = cursor.fetchone()
     
     if produto:
-        nome, categoria, preco = produto
+        nome, categoria, preco, imagem, descricao = produto
         dados = {}
         
-        dados['Nome'] = nome
-        dados['Categoria'] = categoria
-        dados['Preço'] = preco
+        dados['nome'] = nome
+        dados['categoria'] = categoria
+        dados['preco'] = preco
+        dados['imagem'] = imagem
+        dados['descricao'] = descricao
         
         return dados
     
     return None
 
-def atualiza_produto(id, nome=None, categoria=None, preco=None, imagem=None):
+def atualiza_produto(id, nome=None, categoria=None, preco=None, imagem=None, descricao=None):
     conexao = sqlite3.connect("cardapio.db")
     cursor = conexao.cursor()
     
-    informacoes_dos_produtos = (nome, categoria, preco, imagem)
-    
-    if informacoes_dos_produtos.count(None) == 4:
+    if not nome or not categoria or not preco:
         conexao.close()
         return None
     
+    informacoes_dos_produtos = (nome, categoria, preco, imagem, descricao)
+    
     linhas_afetadas = 0
     
-    variavel_da_query_sql = ["nome", "categoria", "preco", "imagem"]
+    variavel_da_query_sql = ["nome", "categoria", "preco", "imagem", "descricao"]
         
     for contador, dado in enumerate(informacoes_dos_produtos):
         if dado is not None:

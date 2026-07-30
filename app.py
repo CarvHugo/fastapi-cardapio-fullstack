@@ -31,6 +31,7 @@ class Produto(BaseModel):
     categoria: str
     preco: float
     imagem: str
+    descricao: str
     
     
 class ProdutoPatch(BaseModel):
@@ -38,6 +39,7 @@ class ProdutoPatch(BaseModel):
     categoria: Optional[str] = None
     preco: Optional[float] = None
     imagem: Optional[str] = None
+    descricao: Optional[str] = None
 
 
 @app.get("/produtos")
@@ -52,7 +54,8 @@ async def listar_produtos(nome: str = None, categoria: str = None, ordenar: str 
             "nome": coluna[1],
             "categoria": coluna[2],
             "preco": coluna[3],
-            "imagem": coluna[4]
+            "imagem": coluna[4],
+            "descricao": coluna[5]
         })
 
     return lista_produtos
@@ -64,7 +67,7 @@ async def cadastro_de_produtos(produto: Produto, x_api_key: str = Header()):
     if not produto.nome or not produto.categoria or produto.preco <= 0:
         raise HTTPException(status_code=422, detail="Ocorreu um erro com a validação dos dados! Digite dados válidos para cadastro.")
     
-    produto = cadastra_produtos(produto.nome, produto.categoria, produto.preco, produto.imagem)
+    produto = cadastra_produtos(produto.nome, produto.categoria, produto.preco, produto.imagem, produto.descricao)
     
     return produto
 
@@ -83,7 +86,7 @@ async def delecao_de_produtos(id: int, x_api_key: str = Header()):
 async def atualizar_produto(id: int, produtopatch: ProdutoPatch, x_api_key: str = Header()):
     valida_api_key(x_api_key)
     
-    atualizacao = atualiza_produto(id, produtopatch.nome, produtopatch.categoria, produtopatch.preco, produtopatch.imagem)
+    atualizacao = atualiza_produto(id, produtopatch.nome, produtopatch.categoria, produtopatch.preco, produtopatch.imagem, produtopatch.descricao)
     
     if atualizacao == None:
         raise HTTPException(status_code=422, detail="É necessário fornecer algum dado para atualização!")

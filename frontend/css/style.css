@@ -86,3 +86,15 @@ img.capa {
     background-color: rgba(248, 238, 238, 0.6);
     padding: 25px;
 }
+
+.erro {
+    font-size: 25px;
+    font-weight: bold;
+    background-color: rgba(248, 238, 238, 0.6);
+    display: inline-block;
+    color: red;
+}
+
+.descricao-produto {
+    font-size: 15px;
+}
