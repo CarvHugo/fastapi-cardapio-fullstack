@@ -7,21 +7,40 @@
     <title>Cardápio</title>
 </head>
 <body onload="buscar()">
-    
-    <h1 class="cabecalho">
-        Cardápio
-    </h1>
+    <header>
+        <nav class="menu-de-navegacao">
+            <a href="index.html">Home</a>
+            <a href="cardapio.html">Cardápio</a>
+            <a href="historia.html">Nossa História</a>
+        </nav>
+        
+        <h1 class="cabecalho">
+            Cardápio
+        </h1>
+    </header>
 
-    <input
-    type="text"
-    id="campo-busca"
-    onkeydown="pressionouEnter(event)"
-    >
+    <main>
 
-    <button onclick="busca_personalizada()">
-        Buscar
-    </button>
-    
+        <section class="busca">
+
+            <input
+                type="text"
+                id="campo-busca"
+                onkeydown="pressionouEnter(event)"
+            >
+
+            <button onclick="busca_personalizada()">
+                Buscar
+            </button>
+        
+        </section>
+
+        <section id="cardapio">
+        
+        </section>
+
+    </main>
+
     <script>
 
         function pressionouEnter(event) {
@@ -42,7 +61,6 @@
             
             if (dados.length === 0) {
                 div.innerHTML = `
-                <p>
                 <div class="erro">
                     <p>Não foi possível encontrar o alimento "${nome}".</p>
                 </div>`
@@ -74,7 +92,6 @@
                                     )}
                                 </p>
                             </div>
-                        </p>
                     </div>
                 `;   
             });
@@ -82,8 +99,6 @@
         }
 
     </script>
-
-    <div id="cardapio"></div>
     
     <script>
         async function buscar() {
@@ -126,7 +141,6 @@
                                         )}
                                     </p>
                                 </div>
-                            </p>
                         </div>
                     `;  
                 }
@@ -150,15 +164,11 @@
                                         )}
                                     </p>
                                 </div>
-                            </p>
                         </div>
                     `;
                 }
             });
         }
     </script>
-
-</body>
-</html>
 </body>
 </html>

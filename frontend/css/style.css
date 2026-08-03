@@ -33,6 +33,7 @@ img.capa {
 }
 
 .produto {
+    transition: transform .2s ease, box-shadow .2s ease;
     align-items: center;
     display: flex;
     width: 275px;
@@ -52,7 +53,8 @@ img.capa {
 }
 
 .produto:hover {
-    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,.2);;
 }
 
 .imagem-produto {
@@ -111,4 +113,24 @@ img.capa {
 
 .preco {
     color: green;
+}
+
+.menu-de-navegacao {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+    padding: 15px;
+
+    background: rgba(240, 141, 49, 0.63);
+
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+
+    z-index: 1000;
 }
