@@ -36,6 +36,7 @@ img.capa {
     align-items: center;
     display: flex;
     width: 275px;
+    min-height: 200px;
     background-color: rgba(248, 238, 238, 0.938);
     padding: 25px;
     margin: 15px;
@@ -106,4 +107,8 @@ img.capa {
     display: flex;
     flex-direction: column;
     gap: 8px;
+}
+
+.preco {
+    color: green;
 }

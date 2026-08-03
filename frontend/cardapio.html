@@ -67,7 +67,7 @@
                                     ${item.descricao}
                                 </div>
 
-                                <p class="preço">
+                                <p class="preco">
                                     R$ ${Number(item.preco).toLocaleString(
                                         "pt-BR",
                                         { minimumFractionDigits: 2 }
@@ -106,28 +106,27 @@
                         <h2 class="titulo">
                             ${item.categoria}
                         </h2>
-
+                        
                         <div class="categoria" id="categoria-${item.categoria}">
-                    
-                            <div class="produto">
-                                <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
+
+                        <div class="produto">
+                            <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
                                 
-                                <p>
+                                <div class="informacoes">
                                     <strong>${item.nome}</strong><br>
 
-                                    Preço:
-                                    R$ ${Number(item.preco).toLocaleString(
-                                        "pt-BR",
-                                        { minimumFractionDigits: 2 }
-                                    )}
-                                    
-                                    <p>
                                     <div class="descricao-produto">
                                         ${item.descricao}
                                     </div>
-                                
-                                </p>
-                            </div>
+
+                                    <p class="preco">
+                                        R$ ${Number(item.preco).toLocaleString(
+                                            "pt-BR",
+                                            { minimumFractionDigits: 2 }
+                                        )}
+                                    </p>
+                                </div>
+                            </p>
                         </div>
                     `;  
                 }
@@ -135,25 +134,25 @@
                 else {
                     categoria.innerHTML += `
                         <div class="produto">
-                                <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
+                            <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
                                 
-                                <p>
+                                <div class="informacoes">
                                     <strong>${item.nome}</strong><br>
-
-                                    Preço:
-                                    R$ ${Number(item.preco).toLocaleString(
-                                        "pt-BR",
-                                        { minimumFractionDigits: 2 }
-                                    )}
-                                    
-                                    <p>
 
                                     <div class="descricao-produto">
                                         ${item.descricao}
                                     </div>
-                                </p>
+
+                                    <p class="preco">
+                                        R$ ${Number(item.preco).toLocaleString(
+                                            "pt-BR",
+                                            { minimumFractionDigits: 2 }
+                                        )}
+                                    </p>
+                                </div>
+                            </p>
                         </div>
-                    `
+                    `;
                 }
             });
         }
