@@ -33,17 +33,20 @@ img.capa {
 }
 
 .produto {
+    align-items: center;
+    display: flex;
     width: 275px;
-    background-color: rgba(248, 238, 238, 0.6);
+    background-color: rgba(248, 238, 238, 0.938);
     padding: 25px;
     margin: 15px;
     border-radius: 10px;
     box-shadow: 3px 3px 8px rgba(0,0,0,0.3);
+    gap: 20px;
 }
 
 .produto img {
-    width: 250px;
-    height: 200px;
+    width: 150px;
+    height: 100px;
     border-radius: 10px;
 }
 
@@ -97,4 +100,10 @@ img.capa {
 
 .descricao-produto {
     font-size: 15px;
+}
+
+.informacoes {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
