@@ -124,13 +124,32 @@ img.capa {
 
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 60px;
 
-    padding: 15px;
+    padding: 5px;
 
-    background: rgba(240, 141, 49, 0.63);
+    background-image: url("../imagens/madeira.avif");
+    background-size: cover;
+    background-position: center;
 
-    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    box-shadow: 0 2px 8px rgba(0,0,0,.25);
 
     z-index: 1000;
+}
+
+.menu-de-navegacao a {
+    display: inline-block;
+
+    padding: 12px 24px;
+    
+    color: #f8f5f2;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+
+    transition: .2s;
+}
+
+.menu-de-navegacao a:hover {
+    text-shadow: 0 0 8px rgba(255,255,255,.6);
 }
