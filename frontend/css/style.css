@@ -123,12 +123,13 @@ img.capa {
     width: 100%;
 
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items:center;
     gap: 60px;
 
     padding: 5px;
 
-    background-image: url("../imagens/madeira.avif");
+    background-image: url("../imagens/madeira.jpg");
     background-size: cover;
     background-position: center;
 
@@ -163,4 +164,13 @@ img.capa {
     height: 60px;
 
     padding: 20px;
+}
+
+.logotipo img {
+    display: flex;
+    
+    flex-direction:row;
+    
+    width: 100px;
+    height: 100px;
 }
