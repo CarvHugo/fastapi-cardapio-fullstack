@@ -65,7 +65,7 @@
             const campo = document.getElementById("campo-busca")
             const nome = campo.value
 
-            const resposta = await fetch(`http://localhost:8000/produtos?nome=${nome}`)
+            const resposta = await fetch(`https://fastapi-cardapio-api.onrender.com/produtos?nome=${nome}`)
             const dados = await resposta.json()
 
             const div = document.getElementById("cardapio");
@@ -114,7 +114,7 @@
     
     <script>
         async function buscar() {
-            const resposta = await fetch("http://localhost:8000/produtos");
+            const resposta = await fetch("https://fastapi-cardapio-api.onrender.com/produtos");
             const dados = await resposta.json();
 
             const div = document.getElementById("cardapio");
