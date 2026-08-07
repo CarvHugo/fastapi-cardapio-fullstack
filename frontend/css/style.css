@@ -18,7 +18,7 @@ main {
     max-width: 1200px;
     margin: auto;
     padding: 10px;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(243, 241, 232, 0.9);
     box-shadow: 3px 3px 5px rgba(80, 80, 80, 0.459);
 }
 
@@ -81,8 +81,6 @@ img.capa {
     font-size: 40px;
     text-align: center;
     font-weight: bold;
-    background-color: rgba(248, 238, 238, 0.6);
-
 }
 
 .cabecalho {
@@ -116,7 +114,7 @@ img.capa {
 }
 
 .menu-de-navegacao {
-    position: fixed;
+    position: static;
     top: 0;
     left: 0;
 
@@ -171,6 +169,11 @@ img.capa {
     
     flex-direction:row;
     
-    width: 100px;
-    height: 100px;
+    width: 350px;
+    height: 150px;
+}
+
+.titulo-menu {
+    font-size: 25px;
+    text-align: center;
 }
