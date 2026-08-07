@@ -7,21 +7,52 @@
     <title>Cardápio</title>
 </head>
 <body onload="buscar()">
-    
-    <h1 class="cabecalho">
-        Cardápio
-    </h1>
+    <header>
+        <nav class="menu-de-navegacao">
+            <nav class="logotipo">
+                <img src="imagens/ui/cdm2.png">
+            </nav>
+            
+            <a href="index.html">Home
+                <img src="imagens/ui/casinha.png" alt="Home">
+            </a>
 
-    <input
-    type="text"
-    id="campo-busca"
-    onkeydown="pressionouEnter(event)"
-    >
+            <a href="cardapio.html">Cardápio
+                <img src="imagens/ui/menu.png" alt="Cardápio">
+            </a>
 
-    <button onclick="busca_personalizada()">
-        Buscar
-    </button>
-    
+            <a href="historia.html">Nossa História
+                <img src="imagens/ui/pergaminho.png" alt="História">
+            </a>
+        </nav>
+    </header>
+
+    <main>
+        <h1 class="titulo-menu">
+            Menu
+        </h1>
+
+
+        <section class="busca">
+
+            <input
+                type="text"
+                id="campo-busca"
+                onkeydown="pressionouEnter(event)"
+            >
+
+            <button onclick="busca_personalizada()">
+                Buscar
+            </button>
+        
+        </section>
+
+        <section id="cardapio">
+        
+        </section>
+
+    </main>
+
     <script>
 
         function pressionouEnter(event) {
@@ -42,7 +73,6 @@
             
             if (dados.length === 0) {
                 div.innerHTML = `
-                <p>
                 <div class="erro">
                     <p>Não foi possível encontrar o alimento "${nome}".</p>
                 </div>`
@@ -57,31 +87,30 @@
 
             dados.forEach(item => {
                 categoria.innerHTML += `
-                        <div class="produto">
-                            <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
-                            <p>
+                    <div class="produto">
+                        <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
+                            
+                            <div class="informacoes">
                                 <strong>${item.nome}</strong><br>
 
-                                    Preço:
+                                <div class="descricao-produto">
+                                    ${item.descricao}
+                                </div>
+
+                                <p class="preco">
                                     R$ ${Number(item.preco).toLocaleString(
                                         "pt-BR",
                                         { minimumFractionDigits: 2 }
                                     )}
-                                <p>
-                                    
-                                <div class="descricao-produto">
-                                     ${item.descricao}
-                                </div>
-                            </p>
-                        </div>
-                `   
-            })
+                                </p>
+                            </div>
+                    </div>
+                `;   
+            });
 
         }
 
     </script>
-
-    <div id="cardapio"></div>
     
     <script>
         async function buscar() {
@@ -104,28 +133,26 @@
                         <h2 class="titulo">
                             ${item.categoria}
                         </h2>
-
+                        
                         <div class="categoria" id="categoria-${item.categoria}">
-                    
-                            <div class="produto">
-                                <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
+
+                        <div class="produto">
+                            <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
                                 
-                                <p>
+                                <div class="informacoes">
                                     <strong>${item.nome}</strong><br>
 
-                                    Preço:
-                                    R$ ${Number(item.preco).toLocaleString(
-                                        "pt-BR",
-                                        { minimumFractionDigits: 2 }
-                                    )}
-                                    
-                                    <p>
                                     <div class="descricao-produto">
                                         ${item.descricao}
                                     </div>
-                                
-                                </p>
-                            </div>
+
+                                    <p class="preco">
+                                        R$ ${Number(item.preco).toLocaleString(
+                                            "pt-BR",
+                                            { minimumFractionDigits: 2 }
+                                        )}
+                                    </p>
+                                </div>
                         </div>
                     `;  
                 }
@@ -133,31 +160,27 @@
                 else {
                     categoria.innerHTML += `
                         <div class="produto">
-                                <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
+                            <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
                                 
-                                <p>
+                                <div class="informacoes">
                                     <strong>${item.nome}</strong><br>
-
-                                    Preço:
-                                    R$ ${Number(item.preco).toLocaleString(
-                                        "pt-BR",
-                                        { minimumFractionDigits: 2 }
-                                    )}
-                                    
-                                    <p>
 
                                     <div class="descricao-produto">
                                         ${item.descricao}
                                     </div>
-                                </p>
+
+                                    <p class="preco">
+                                        R$ ${Number(item.preco).toLocaleString(
+                                            "pt-BR",
+                                            { minimumFractionDigits: 2 }
+                                        )}
+                                    </p>
+                                </div>
                         </div>
-                    `
+                    `;
                 }
             });
         }
     </script>
-
-</body>
-</html>
 </body>
 </html>

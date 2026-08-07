@@ -4,7 +4,7 @@
 }
 
 body { 
-    background-image: url("../imagens/massa.jpg");
+    background-image: url("../imagens/massa.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -18,7 +18,7 @@ main {
     max-width: 1200px;
     margin: auto;
     padding: 10px;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(243, 241, 232, 0.9);
     box-shadow: 3px 3px 5px rgba(80, 80, 80, 0.459);
 }
 
@@ -33,22 +33,28 @@ img.capa {
 }
 
 .produto {
+    transition: transform .2s ease, box-shadow .2s ease;
+    align-items: center;
+    display: flex;
     width: 275px;
-    background-color: rgba(248, 238, 238, 0.6);
+    min-height: 200px;
+    background-color: rgba(248, 238, 238, 0.938);
     padding: 25px;
     margin: 15px;
     border-radius: 10px;
     box-shadow: 3px 3px 8px rgba(0,0,0,0.3);
+    gap: 20px;
 }
 
 .produto img {
-    width: 250px;
-    height: 200px;
+    width: 150px;
+    height: 100px;
     border-radius: 10px;
 }
 
 .produto:hover {
-    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,.2);;
 }
 
 .imagem-produto {
@@ -75,8 +81,6 @@ img.capa {
     font-size: 40px;
     text-align: center;
     font-weight: bold;
-    background-color: rgba(248, 238, 238, 0.6);
-
 }
 
 .cabecalho {
@@ -97,4 +101,79 @@ img.capa {
 
 .descricao-produto {
     font-size: 15px;
+}
+
+.informacoes {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.preco {
+    color: green;
+}
+
+.menu-de-navegacao {
+    position: static;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    gap: 60px;
+
+    padding: 5px;
+
+    background-image: url("../imagens/madeira.jpg");
+    background-size: cover;
+    background-position: center;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,.25);
+
+    z-index: 1000;
+}
+
+.menu-de-navegacao a {
+    display: flex;
+    
+    flex-direction: column;
+
+    align-items: center;
+
+    padding: 12px 24px;
+    
+    color: #f8f5f2;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+
+    transition: .2s;
+}
+
+.menu-de-navegacao a:hover {
+    text-shadow: 0 0 8px rgba(255,255,255,.6);
+}
+
+.menu-de-navegacao img {
+    width: 60px;
+    height: 60px;
+
+    padding: 20px;
+}
+
+.logotipo img {
+    display: flex;
+    
+    flex-direction:row;
+    
+    width: 350px;
+    height: 150px;
+}
+
+.titulo-menu {
+    font-size: 25px;
+    text-align: center;
 }
