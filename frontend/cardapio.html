@@ -114,73 +114,92 @@
     
     <script>
         async function buscar() {
-            const resposta = await fetch("https://fastapi-cardapio-api.onrender.com/produtos");
-            const dados = await resposta.json();
+    try {
+        const resposta = await fetch("https://fastapi-cardapio-api.onrender.com/produtos");
 
-            const div = document.getElementById("cardapio");
-            div.innerHTML = "";
+        if (!resposta.ok) {
+            throw new Error("Erro ao carregar os produtos!");
+        }
 
-            if (dados.length === 0) {
-                div.innerHTML = "<p>Não foi possível carregar o cardápio. Tente novamente em 40 segundos.</p>";
-                return;
+        const dados = await resposta.json();
+
+        const div = document.getElementById("cardapio");
+        div.innerHTML = "";
+
+        if (dados.length === 0) {
+            div.innerHTML = "<p>Não foi possível carregar o cardápio. Tente novamente em 40 segundos.</p>";
+            return;
+        }
+
+        dados.forEach(item => {
+            let categoria = document.getElementById(`categoria-${item.categoria}`);
+
+            if (categoria === null) {
+                div.innerHTML += `
+                    <h2 class="titulo">
+                        ${item.categoria}
+                    </h2>
+
+                    <div class="categoria" id="categoria-${item.categoria}">
+
+                        <div class="produto">
+                            <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
+
+                            <div class="informacoes">
+                                <strong>${item.nome}</strong><br>
+
+                                <div class="descricao-produto">
+                                    ${item.descricao}
+                                </div>
+
+                                <p class="preco">
+                                    R$ ${Number(item.preco).toLocaleString(
+                                        "pt-BR",
+                                        { minimumFractionDigits: 2 }
+                                    )}
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                `;
             }
 
-            dados.forEach(item => {
-                let categoria = document.getElementById(`categoria-${item.categoria}`);
+            else {
+                categoria.innerHTML += `
+                    <div class="produto">
+                        <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
 
-                if (categoria === null) {
-                    div.innerHTML += `
-                        <h2 class="titulo">
-                            ${item.categoria}
-                        </h2>
-                        
-                        <div class="categoria" id="categoria-${item.categoria}">
+                        <div class="informacoes">
+                            <strong>${item.nome}</strong><br>
 
-                        <div class="produto">
-                            <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
-                                
-                                <div class="informacoes">
-                                    <strong>${item.nome}</strong><br>
+                            <div class="descricao-produto">
+                                ${item.descricao}
+                            </div>
 
-                                    <div class="descricao-produto">
-                                        ${item.descricao}
-                                    </div>
-
-                                    <p class="preco">
-                                        R$ ${Number(item.preco).toLocaleString(
-                                            "pt-BR",
-                                            { minimumFractionDigits: 2 }
-                                        )}
-                                    </p>
-                                </div>
+                            <p class="preco">
+                                R$ ${Number(item.preco).toLocaleString(
+                                    "pt-BR",
+                                    { minimumFractionDigits: 2 }
+                                )}
+                            </p>
                         </div>
-                    `;  
-                }
-                
-                else {
-                    categoria.innerHTML += `
-                        <div class="produto">
-                            <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
-                                
-                                <div class="informacoes">
-                                    <strong>${item.nome}</strong><br>
+                    </div>
+                `;
+            }
+        });
 
-                                    <div class="descricao-produto">
-                                        ${item.descricao}
-                                    </div>
+    } catch (erro) {
+        console.error(erro);
 
-                                    <p class="preco">
-                                        R$ ${Number(item.preco).toLocaleString(
-                                            "pt-BR",
-                                            { minimumFractionDigits: 2 }
-                                        )}
-                                    </p>
-                                </div>
-                        </div>
-                    `;
-                }
-            });
-        }
+        document.getElementById("cardapio").innerHTML = `
+            <p class="erro">
+                Não foi possível carregar o cardápio.
+                Tente novamente mais tarde.
+            </p>
+        `;
+    }
+}
     </script>
 </body>
 </html>
