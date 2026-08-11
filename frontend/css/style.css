@@ -33,7 +33,9 @@ img.capa {
 }
 
 .produto {
+    cursor: pointer;
     transition: transform .2s ease, box-shadow .2s ease;
+
     align-items: center;
     display: flex;
     width: 275px;
@@ -176,4 +178,13 @@ img.capa {
 .titulo-menu {
     font-size: 25px;
     text-align: center;
+}
+
+@media (max-width: 600px) {
+    .produto {
+        width: 100%;
+        box-sizing: border-box;
+        margin: 10px 0;
+        padding: 15px;
+    }
 }
