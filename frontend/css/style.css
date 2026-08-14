@@ -97,7 +97,6 @@ img.capa {
 .erro {
     font-size: 25px;
     font-weight: bold;
-    background-color: rgba(248, 238, 238, 0.6);
     display: inline-block;
     color: red;
 }
@@ -126,9 +125,9 @@ img.capa {
     display: flex;
     justify-content: space-between;
     align-items:center;
-    gap: 60px;
+    gap: 40px;
 
-    padding: 5px;
+    padding: 0px;
 
     background-image: url("../imagens/madeira.jpg");
     background-size: cover;
@@ -146,7 +145,7 @@ img.capa {
 
     align-items: center;
 
-    padding: 12px 24px;
+    padding: 6px 12px;
     
     color: #f8f5f2;
     text-decoration: none;
@@ -161,10 +160,10 @@ img.capa {
 }
 
 .menu-de-navegacao img {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
 
-    padding: 20px;
+    padding: 5px;
 }
 
 .logotipo img {
@@ -172,8 +171,8 @@ img.capa {
     
     flex-direction:row;
     
-    width: 350px;
-    height: 150px;
+    width: 240px;
+    height: 100px;
 }
 
 .titulo-menu {
