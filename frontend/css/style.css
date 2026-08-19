@@ -197,7 +197,7 @@ img.capa {
     align-items: center;
     justify-content: space-between;
     gap: 30px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.329), rgba(0, 0, 0, 0.329)), url("../imagens/imagem-home.jpg");
+    background-image: linear-gradient(rgba(170, 88, 21, 0.329), rgba(0, 0, 0, 0.808)), url("../imagens/imagem-home.jpg");
 }
 
 .apresentacao img {
@@ -239,7 +239,7 @@ img.capa {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.329), rgba(0, 0, 0, 0.329))
+    background-image: linear-gradient(rgba(170, 88, 21, 0.329), rgba(0, 0, 0, 0.329))
 }
 
 @media (max-width: 600px) {
