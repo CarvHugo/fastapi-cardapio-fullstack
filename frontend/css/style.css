@@ -242,6 +242,30 @@ img.capa {
     background-image: linear-gradient(rgba(170, 88, 21, 0.329), rgba(0, 0, 0, 0.329))
 }
 
+#historia h2,
+#historia p,
+#contato h2,
+#contato p {
+    font-family: cursive;
+    font-size: 20px;
+    color: white;
+
+    padding: 15px;
+    margin: 0px;
+}
+
+.historia-container {
+    background-color: orange;
+}
+
+.contato-container {
+    background-color: rgb(66, 64, 64);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 @media (max-width: 600px) {
     .produto {
         width: 100%;
