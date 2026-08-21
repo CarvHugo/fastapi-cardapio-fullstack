@@ -31,7 +31,7 @@ main {
 
 img.capa {
     display: block;
-    max-width: 100%;
+    max-width: 1400px;
     height : auto;
 }
 
@@ -125,6 +125,7 @@ img.capa {
     position: static;
     top: 0;
     left: 0;
+    margin: 0px;
 
     width: 100%;
 
@@ -202,7 +203,7 @@ img.capa {
 
 .apresentacao img {
     display: block;
-    width: 350px;
+    max-width: 350px;
     height: auto;
     margin: 0 auto 20px;
 }
@@ -255,11 +256,36 @@ img.capa {
 }
 
 .historia-container {
-    background-color: orange;
+    background-color: rgb(122, 81, 42);
+}
+
+.botao-cardapio {
+    display: inline-block;
+    padding: 12px 25px;
+    margin-top: 20px;
+
+    background-color: #7a1f1f;
+    color: white;
+
+    text-decoration: none;
+    font-weight: bold;
+
+    border-radius: 6px;
+
+    transition: 0.2s;
+}
+
+.botao-cardapio:hover {
+    transform: translateY(-2px);
 }
 
 .contato-container {
     background-color: rgb(66, 64, 64);
+    background-image:
+    linear-gradient(rgba(99, 50, 10, 0.329), rgba(99, 50, 10, 0.329)),
+    url("../imagens/fundo-home.jpg");
+    max-width: 1400px;
+    height: auto;
 }
 
 html {
