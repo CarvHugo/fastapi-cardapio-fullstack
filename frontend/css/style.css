@@ -31,7 +31,7 @@ main {
 
 img.capa {
     display: block;
-    max-width: 1400px;
+    width: 1400px;
     height : auto;
 }
 
@@ -256,7 +256,7 @@ img.capa {
 }
 
 .historia-container {
-    background-color: rgb(122, 81, 42);
+    background-image: linear-gradient(rgba(190, 107, 38, 0.616), rgba(190, 107, 38, 0.616)), url("../imagens/fundo-historia.jpg");
 }
 
 .botao-cardapio {
@@ -279,13 +279,26 @@ img.capa {
     transform: translateY(-2px);
 }
 
+.cozinha-container h1 {
+    text-align: center;
+    font-family: cursive;
+    font-size: large;
+    margin: 0px;
+    color: white;
+}
+
+.cozinha-container {
+    background-color:#7a1f1f;
+    padding: 15px;
+}
+
 .contato-container {
     background-color: rgb(66, 64, 64);
     background-image:
     linear-gradient(rgba(99, 50, 10, 0.329), rgba(99, 50, 10, 0.329)),
-    url("../imagens/fundo-home.jpg");
+    url("../imagens/contato.jpg");
     max-width: 1400px;
-    height: auto;
+    height: 300px;
 }
 
 html {
