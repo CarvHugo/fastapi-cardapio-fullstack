@@ -38,11 +38,25 @@ main h1 {
     color: white;
 }
 
-img.capa {
+.capa {
+    position: relative;
+}
+
+.capa img {
     display: block;
-    width: 1400px;
+    width: 100%;
+    max-width: 1400px;
     height : auto;
 }
+
+.capa::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image: linear-gradient(rgba(0, 0, 0, 0.096), rgba(0, 0, 0, 0.096));
+}
+
 
 #cardapio {
     width: 100%;
@@ -251,20 +265,25 @@ body button {
 
 .video-container {
     position: relative;
-    width: 355px;
+    width: 100%;
+    max-width: 355px;
+    margin: 0 auto;
+    aspect-ratio: 16 / 9;
 }
 
 .video-container video {
     position: relative;
     display: block;
-    width: 355px;
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 .video-container::after {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(rgba(170, 88, 21, 0.329), rgba(0, 0, 0, 0.329))
+    background-image: linear-gradient(rgba(170, 88, 21, 0.329), rgba(0, 0, 0, 0.329));
 }
 
 #historia h2,
@@ -280,7 +299,7 @@ body button {
 }
 
 .historia-container {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.616), rgba(190, 107, 38, 0.616)), url("../imagens/fundo-historia.jpg");
+    background-image: linear-gradient(rgba(29, 27, 27, 0.507), rgba(151, 133, 105, 0.329)), url("../imagens/fundo-historia.jpg");
 }
 
 .botao-cardapio {
@@ -343,7 +362,7 @@ html {
     }
 
     .menu-de-navegacao a {
-        font-size: 14px;
+        font-size: 11px;
         padding: 4px;
         align-items: center;
     }
@@ -355,7 +374,7 @@ html {
     }
 
     .logotipo img {
-        width: 190px;
+        width: 160px;
         height: auto;
     }
 }
