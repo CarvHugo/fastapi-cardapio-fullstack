@@ -16,12 +16,21 @@ body {
     min-height: 100vh;
 }
 
+
 main {
     max-width: 1400px;
     margin: auto;
     padding: 0px;
     background-color: rgba(243, 241, 232, 0.9);
     box-shadow: 3px 3px 5px rgba(80, 80, 80, 0.459);
+}
+
+main h1 {
+    margin: 0px;
+}
+
+#pagina-cardapio main {
+    max-width: 100%
 }
 
 .mensagem-home {
@@ -121,6 +130,20 @@ img.capa {
     color: green;
 }
 
+.busca {
+    padding: 15px;
+}
+
+.busca input {
+    padding: 5px;
+    width: 460px;
+}
+
+body button {
+    padding: 5px;
+    width: 100px;
+}
+
 .menu-de-navegacao {
     position: static;
     top: 0;
@@ -157,6 +180,7 @@ img.capa {
     color: #f8f5f2;
     text-decoration: none;
     font-weight: bold;
+    font-style: oblique;
     font-size: 18px;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
 
@@ -256,7 +280,7 @@ img.capa {
 }
 
 .historia-container {
-    background-image: linear-gradient(rgba(190, 107, 38, 0.616), rgba(190, 107, 38, 0.616)), url("../imagens/fundo-historia.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.616), rgba(190, 107, 38, 0.616)), url("../imagens/fundo-historia.jpg");
 }
 
 .botao-cardapio {
