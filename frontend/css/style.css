@@ -348,6 +348,44 @@ html {
     scroll-behavior: smooth;
 }
 
+.logotipo-admin img {
+    max-width: 400px;
+    height: auto;
+    margin: auto;
+
+    display: block;
+
+    padding: 15px;
+}
+
+.login-container input {
+    display: block;
+    margin: auto;
+}
+
+.login-container h1 {
+    margin: 0;
+    display: block;
+
+    background-color: rgb(196, 208, 214);
+    font-size: 30px;
+    text-align: center;
+}
+
+
+.login-container {
+    background-color: white;
+    max-width: 340px;
+    width: 100%;
+    max-height: 300px;
+    height: auto;
+
+    padding: 30px;
+    margin: auto;
+
+    border-radius: 20%;
+}
+
 @media (max-width: 600px) {
     .produto {
         width: 100%;
