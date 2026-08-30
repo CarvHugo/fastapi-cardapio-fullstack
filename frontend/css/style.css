@@ -370,6 +370,13 @@ html {
     background-color: rgb(196, 208, 214);
     font-size: 30px;
     text-align: center;
+    border-radius: 50%;
+}
+
+.login-container button {
+    background-color:rgb(131, 130, 130);
+    display: block;
+    margin: 30px auto 0;
 }
 
 
