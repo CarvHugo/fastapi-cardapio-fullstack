@@ -256,6 +256,7 @@ body button {
     display: block;
     max-width: 1400px;
     height: auto;
+    width: 400px;
     max-height: 335px;
 }
 
