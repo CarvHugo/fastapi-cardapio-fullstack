@@ -32,13 +32,34 @@
             
             <input id="senha" type="password">
                 
-            <button></button>
+            <button onclick="alternar_visualizacao()" id="visualizar-senha" type="button"></button>
         
         </div>
 
-        <button>Login</button>
+        <button id="login" type="button">Login</button>
 
     </div>
 
+    <script>
+        let visualizacao = false
+
+        function alternar_visualizacao() {
+            if (visualizacao === false) {
+                visualizacao = true
+                let input_senha = document.getElementById("senha");
+                input_senha.type = "text";
+                let imagem_olho = document.getElementById("visualizar-senha");
+                imagem_olho.style.backgroundImage = 'url("imagens/olho.png")';
+            }
+
+            else {
+                visualizacao = false
+                let input_senha = document.getElementById("senha");
+                input_senha.type = "password";
+                let imagem_olho = document.getElementById("visualizar-senha");
+                imagem_olho.style.backgroundImage = 'url("imagens/olho-bloqueado.png")';
+            }      
+        }
+    </script>
 </body>
 </html>

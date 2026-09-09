@@ -364,7 +364,9 @@ html {
 .login-container button {
     background-color:rgb(131, 130, 130);
     display: block;
-    margin: 15px auto 0;
+    margin: 30px auto 0;
+
+    cursor: pointer;
 }
 
 
@@ -392,9 +394,11 @@ html {
 }
 
 .senha-container button {
+    cursor: pointer;
+    
     position: absolute;
     left: 96%;
-    top: -60%;
+    top: -125%;
     
     padding: 0;
 
@@ -404,7 +408,7 @@ html {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url("../imagens/olho.png");
+    background-image: url("../imagens/olho-bloqueado.png");
     
     border: none;
     background-color: transparent;
