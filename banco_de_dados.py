@@ -1,4 +1,41 @@
 import sqlite3
+import psycopg
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+def conectar_banco():
+    nome_banco = os.getenv("DB_NAME")
+    usuario = os.getenv("DB_USER")
+    senha = os.getenv("DB_PASSWORD")
+    host = os.getenv("DB_HOST")
+    port = os.getenv("DB_PORT")
+    
+    conexao = psycopg.connect(
+        dbname=nome_banco, user=usuario, password=senha, host=host, port=port
+    )
+    
+    return conexao
+    
+def garantir_tabela_produtos2():
+    conexao = conectar_banco()
+    
+    cursor = conexao.cursor()
+    
+    cursor.execute("""
+                   CREATE TABLE IF NOT EXISTS produtos (
+                    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+                    nome TEXT NOT NULL,
+                    categoria TEXT NOT NULL,
+                    preco REAL NOT NULL,
+                    descricao TEXT NOT NULL,
+                    imagem TEXT NOT NULL
+                    );
+    """)
+    
+    conexao.commit()
+    conexao.close()
     
 def garantir_tabela_produtos():
     conexao = sqlite3.connect("cardapio.db")
