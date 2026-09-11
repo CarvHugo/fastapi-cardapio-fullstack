@@ -18,7 +18,7 @@ def conectar_banco():
     
     return conexao
     
-def garantir_tabela_produtos2():
+def garantir_tabela_produtos():
     conexao = conectar_banco()
     
     cursor = conexao.cursor()
@@ -36,27 +36,11 @@ def garantir_tabela_produtos2():
     
     conexao.commit()
     conexao.close()
-    
-def garantir_tabela_produtos():
-    conexao = sqlite3.connect("cardapio.db")
-    cursor = conexao.cursor()
 
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS produtos (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome TEXT NOT NULL,
-        categoria TEXT NOT NULL,
-        preco REAL NOT NULL,
-        descricao TEXT NOT NULL,
-        imagem TEXT NOT NULL
-    );
-    """)
-    
-    conexao.commit()
-    conexao.close()
 
 def buscar_produtos(nome=None, categoria=None, ordenar=None):
-    conexao = sqlite3.connect("cardapio.db")
+    conexao = conectar_banco()
+    
     cursor = conexao.cursor()
     
     query = "SELECT id, nome, categoria, preco, imagem, descricao FROM produtos"
@@ -66,11 +50,11 @@ def buscar_produtos(nome=None, categoria=None, ordenar=None):
     parametros = []
     
     if nome:
-        condicoes.append("nome LIKE ?")
+        condicoes.append("nome LIKE %s")
         parametros.append(f"%{nome}%")
     
     if categoria:
-        condicoes.append("categoria LIKE ?")
+        condicoes.append("categoria LIKE %s")
         parametros.append(f"%{categoria}%")
         
     if condicoes:
