@@ -87,11 +87,11 @@ def cadastra_produtos(nome, categoria, preco, imagem=None, descricao=None):
     if descricao:
         descricao = descricao.strip()
     
-    conexao = sqlite3.connect("cardapio.db")
+    conexao = conectar_banco()
     cursor = conexao.cursor()
     
     if nome != "" and categoria != "" and preco > 0 and imagem and descricao:
-        cursor.execute("INSERT INTO produtos (nome, categoria, preco, imagem, descricao) VALUES (?, ?, ?, ?, ?)", (nome, categoria, preco, imagem, descricao))
+        cursor.execute("INSERT INTO produtos (nome, categoria, preco, imagem, descricao) VALUES (%s, %s, %s, %s, %s)", (nome, categoria, preco, imagem, descricao))
 
         conexao.commit()
         conexao.close()
@@ -99,7 +99,7 @@ def cadastra_produtos(nome, categoria, preco, imagem=None, descricao=None):
         return nome, categoria, preco, imagem, descricao
     
     elif nome != "" and categoria != "" and preco > 0 and imagem and not descricao:
-        cursor.execute("INSERT INTO produtos (nome, categoria, preco, imagem) VALUES (?, ?, ?, ?)", (nome, categoria, preco, imagem))
+        cursor.execute("INSERT INTO produtos (nome, categoria, preco, imagem) VALUES (%s, %s, %s, %s)", (nome, categoria, preco, imagem))
         
         conexao.commit()
         conexao.close()
@@ -107,7 +107,7 @@ def cadastra_produtos(nome, categoria, preco, imagem=None, descricao=None):
         return nome, categoria, preco, imagem
     
     elif nome != "" and categoria != "" and preco > 0 and not imagem and descricao:
-            cursor.execute("INSERT INTO produtos (nome, categoria, preco, descricao) VALUES (?, ?, ?, ?)", (nome, categoria, preco, descricao))
+            cursor.execute("INSERT INTO produtos (nome, categoria, preco, descricao) VALUES (%s, %s, %s, %s)", (nome, categoria, preco, descricao))
             
             conexao.commit()
             conexao.close()
@@ -115,7 +115,7 @@ def cadastra_produtos(nome, categoria, preco, imagem=None, descricao=None):
             return nome, categoria, preco, descricao
     
     elif nome != "" and categoria != "" and preco > 0 and not imagem and not descricao:
-        cursor.execute("INSERT INTO produtos (nome, categoria, preco) VALUES (?, ?, ?)", (nome, categoria, preco))
+        cursor.execute("INSERT INTO produtos (nome, categoria, preco) VALUES (%s, %s, %s)", (nome, categoria, preco))
         
         conexao.commit()
         conexao.close()
