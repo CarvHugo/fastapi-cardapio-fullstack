@@ -139,7 +139,11 @@ def consulta_produto(id):
         dados['descricao'] = descricao
         dados['imagem'] = imagem
         
+        conexao.close()
+        
         return dados
+    
+    conexao.close()
     
     return None
 
