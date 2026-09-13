@@ -108,19 +108,19 @@ def cadastra_produtos(nome, categoria, preco, imagem, descricao):
 def tenta_delecao(id):
     conexao = conectar_banco()
     cursor = conexao.cursor()
-    
-    cursor.execute("SELECT * FROM produtos WHERE id = %s", (id,))
-    verificador_de_linha = cursor.fetchone()
 
-    if verificador_de_linha is not None:
-        cursor.execute("DELETE FROM produtos WHERE id = %s", (id,))
+    cursor.execute("DELETE FROM produtos WHERE id = %s", (id,))
+    
+    linha_afetada = cursor.rowcount
+    
+    if linha_afetada == 0:
+        conexao.close()
+        return None
         
+    else:
         conexao.commit()
         conexao.close()
         return {"message": f'{id} deletado!'}
-    
-    conexao.close()
-    return None
 
 
 def consulta_produto(id):
