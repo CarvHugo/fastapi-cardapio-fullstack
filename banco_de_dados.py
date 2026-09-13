@@ -163,25 +163,25 @@ def consulta_produto(id):
     return None
 
 def atualiza_produto(id, nome=None, categoria=None, preco=None, imagem=None, descricao=None):
-    conexao = sqlite3.connect("cardapio.db")
+    conexao = conectar_banco()
     cursor = conexao.cursor()
     
     if not nome or not categoria or not preco:
         conexao.close()
         return None
     
-    informacoes_dos_produtos = (nome, categoria, preco, imagem, descricao)
+    informacoes_dos_produtos = (nome, categoria, preco, descricao, imagem)
     
     linhas_afetadas = 0
     
-    variavel_da_query_sql = ["nome", "categoria", "preco", "imagem", "descricao"]
+    variavel_da_query_sql = ["nome", "categoria", "preco", "descricao", "imagem"]
         
     for contador, dado in enumerate(informacoes_dos_produtos):
         if dado is not None:
             cursor.execute(f"""
                            UPDATE produtos
-                           SET {variavel_da_query_sql[contador]} = ?
-                           WHERE id = ?
+                           SET {variavel_da_query_sql[contador]} = %s
+                           WHERE id = %s
                            """, (dado, id))
             linhas_afetadas += cursor.rowcount
 
