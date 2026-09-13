@@ -1,4 +1,3 @@
-import sqlite3
 import psycopg
 from dotenv import load_dotenv
 import os
@@ -193,5 +192,3 @@ def atualiza_produto(id, nome=None, categoria=None, preco=None, imagem=None, des
     conexao.close()
     
     return True
-    
-    
