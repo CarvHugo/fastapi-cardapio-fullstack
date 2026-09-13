@@ -142,21 +142,21 @@ def tenta_delecao(id):
 
 
 def consulta_produto(id):
-    conexao = sqlite3.connect("cardapio.db")
+    conexao = conectar_banco()
     cursor = conexao.cursor()
     
-    cursor.execute("SELECT nome, categoria, preco, imagem, descricao FROM produtos WHERE id = ?;", (id,))
+    cursor.execute("SELECT nome, categoria, preco, descricao, imagem FROM produtos WHERE id = %s;", (id,))
     produto = cursor.fetchone()
     
     if produto:
-        nome, categoria, preco, imagem, descricao = produto
+        nome, categoria, preco, descricao, imagem = produto
         dados = {}
         
         dados['nome'] = nome
         dados['categoria'] = categoria
         dados['preco'] = preco
-        dados['imagem'] = imagem
         dados['descricao'] = descricao
+        dados['imagem'] = imagem
         
         return dados
     
