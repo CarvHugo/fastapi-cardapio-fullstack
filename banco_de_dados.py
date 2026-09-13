@@ -117,10 +117,9 @@ def tenta_delecao(id):
         conexao.close()
         return None
         
-    else:
-        conexao.commit()
-        conexao.close()
-        return {"message": f'{id} deletado!'}
+    conexao.commit()
+    conexao.close()
+    return {"message": f'{id} deletado!'}
 
 
 def consulta_produto(id):
@@ -148,10 +147,6 @@ def atualiza_produto(id, nome=None, categoria=None, preco=None, imagem=None, des
     conexao = conectar_banco()
     cursor = conexao.cursor()
     
-    if not nome or not categoria or not preco:
-        conexao.close()
-        return None
-    
     informacoes_dos_produtos = (nome, categoria, preco, descricao, imagem)
     
     linhas_afetadas = 0
@@ -159,12 +154,14 @@ def atualiza_produto(id, nome=None, categoria=None, preco=None, imagem=None, des
     variavel_da_query_sql = ["nome", "categoria", "preco", "descricao", "imagem"]
         
     for contador, dado in enumerate(informacoes_dos_produtos):
+        
         if dado is not None:
             cursor.execute(f"""
                            UPDATE produtos
                            SET {variavel_da_query_sql[contador]} = %s
                            WHERE id = %s
                            """, (dado, id))
+            
             linhas_afetadas += cursor.rowcount
 
     if linhas_afetadas == 0:
