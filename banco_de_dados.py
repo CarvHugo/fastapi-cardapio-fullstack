@@ -124,14 +124,14 @@ def cadastra_produtos(nome, categoria, preco, imagem=None, descricao=None):
     
     
 def tenta_delecao(id):
-    conexao = sqlite3.connect("cardapio.db")
+    conexao = conectar_banco()
     cursor = conexao.cursor()
     
-    cursor.execute("SELECT * FROM produtos WHERE id = ?", (id,))
+    cursor.execute("SELECT * FROM produtos WHERE id = %s", (id,))
     verificador_de_linha = cursor.fetchone()
 
     if verificador_de_linha is not None:
-        cursor.execute("DELETE FROM produtos WHERE id = ?", (id,))
+        cursor.execute("DELETE FROM produtos WHERE id = %s", (id,))
         
         conexao.commit()
         conexao.close()
