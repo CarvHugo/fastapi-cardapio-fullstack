@@ -4,7 +4,7 @@ import os
 
 load_dotenv()
 
-def conectar_banco():
+def conectar_banco_localmente():
     nome_banco = os.getenv("DB_NAME")
     usuario = os.getenv("DB_USER")
     senha = os.getenv("DB_PASSWORD")
@@ -14,6 +14,12 @@ def conectar_banco():
     conexao = psycopg.connect(
         dbname=nome_banco, user=usuario, password=senha, host=host, port=port
     )
+    
+    return conexao
+
+def conectar_banco():
+    database_url = os.getenv("DATABASE_URL")
+    conexao = psycopg.connect(database_url)
     
     return conexao
     
@@ -76,20 +82,18 @@ def buscar_produtos(nome=None, categoria=None, ordenar=None):
     
     return produtos
 
-def cadastra_produtos(nome, categoria, preco, imagem=None, descricao=None):
+def cadastra_produtos(nome, categoria, preco, imagem, descricao):
     nome = nome.strip()
     categoria = categoria.strip()
     
-    if imagem:
-        imagem = imagem.strip()
-        
-    if descricao:
-        descricao = descricao.strip()
+    imagem = imagem.strip()
     
-    conexao = conectar_banco()
-    cursor = conexao.cursor()
+    descricao = descricao.strip()
     
     if nome != "" and categoria != "" and preco > 0 and imagem and descricao:
+        conexao = conectar_banco()
+        cursor = conexao.cursor()
+        
         cursor.execute("INSERT INTO produtos (nome, categoria, preco, imagem, descricao) VALUES (%s, %s, %s, %s, %s)", (nome, categoria, preco, imagem, descricao))
 
         conexao.commit()
@@ -97,29 +101,8 @@ def cadastra_produtos(nome, categoria, preco, imagem=None, descricao=None):
 
         return nome, categoria, preco, imagem, descricao
     
-    elif nome != "" and categoria != "" and preco > 0 and imagem and not descricao:
-        cursor.execute("INSERT INTO produtos (nome, categoria, preco, imagem) VALUES (%s, %s, %s, %s)", (nome, categoria, preco, imagem))
-        
-        conexao.commit()
-        conexao.close()
-        
-        return nome, categoria, preco, imagem
-    
-    elif nome != "" and categoria != "" and preco > 0 and not imagem and descricao:
-            cursor.execute("INSERT INTO produtos (nome, categoria, preco, descricao) VALUES (%s, %s, %s, %s)", (nome, categoria, preco, descricao))
-            
-            conexao.commit()
-            conexao.close()
-            
-            return nome, categoria, preco, descricao
-    
-    elif nome != "" and categoria != "" and preco > 0 and not imagem and not descricao:
-        cursor.execute("INSERT INTO produtos (nome, categoria, preco) VALUES (%s, %s, %s)", (nome, categoria, preco))
-        
-        conexao.commit()
-        conexao.close()
-        
-        return nome, categoria, preco
+    else:
+        return {"message": "nome, categoria, preço, imagem e descrição são obrigatórios e preço não pode ser negativo!"}
     
     
 def tenta_delecao(id):
