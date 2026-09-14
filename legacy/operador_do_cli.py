@@ -2,7 +2,7 @@ import os
 from time import sleep
 import sys
 from api_client import obter_lista_do_cardapio, cadastrar_produto, deletar_produto, atualizar_produto, consultar_produto
-from funcoes_da_cli import estrutura_de_menu, mostrar_opcoes, retornar
+from legacy.funcoes_da_cli import estrutura_de_menu, mostrar_opcoes, retornar
 
 opcoes_menu_principal = [
     'Ver alimentos cadastrados',

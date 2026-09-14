@@ -1,0 +1,32 @@
+import sqlite3
+from dotenv import load_dotenv
+from banco_de_dados import conectar_banco
+
+
+load_dotenv()
+
+conexao_sqlite = sqlite3.connect("cardapio.db")
+
+cursor_sqlite = conexao_sqlite.cursor()
+
+cursor_sqlite.execute("""
+                SELECT nome, categoria, preco, descricao, imagem
+                FROM produtos;
+""")
+
+produtos = cursor_sqlite.fetchall()
+
+conexao_postgresql = conectar_banco()
+
+cursor_postgresql = conexao_postgresql.cursor()
+
+for produto in produtos:
+    cursor_postgresql.execute("INSERT INTO produtos (nome, categoria, preco, descricao, imagem) VALUES (%s, %s, %s, %s, %s)", (produto[0], produto[1], produto[2], produto[3], produto[4]))
+
+conexao_postgresql.commit()
+
+conexao_postgresql.close()
+
+conexao_sqlite.close()
+
+print("Transferência realizada com sucesso!")

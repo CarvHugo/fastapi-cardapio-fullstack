@@ -242,6 +242,7 @@ body button {
 .apresentacao img {
     display: block;
     max-width: 350px;
+    width: 100%;
     max-height: auto;
     margin: 0 auto 20px;
 }
@@ -255,6 +256,7 @@ body button {
     display: block;
     max-width: 1400px;
     height: auto;
+    width: 400px;
     max-height: 335px;
 }
 
@@ -345,6 +347,8 @@ html {
 .login-container input {
     display: block;
     margin: auto;
+    width: 100%;
+    max-width: 170px;
 }
 
 .login-container h1 {
@@ -361,20 +365,53 @@ html {
     background-color:rgb(131, 130, 130);
     display: block;
     margin: 30px auto 0;
+
+    cursor: pointer;
 }
 
 
 .login-container {
     background-color: white;
-    max-width: 340px;
+    max-width: 330px;
     width: 100%;
-    max-height: 300px;
+    max-height: 335px;
     height: auto;
 
     padding: 30px;
     margin: auto;
 
     border-radius: 20%;
+}
+
+.senha-container {
+    position: relative;
+    width: 200px;
+    margin: auto;
+}
+
+.senha-container input {
+    width: 100%;
+}
+
+.senha-container button {
+    cursor: pointer;
+    
+    position: absolute;
+    left: 96%;
+    top: -125%;
+    
+    padding: 0;
+
+    width: 25px;
+    height: 25px;
+    display: block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../imagens/olho-bloqueado.png");
+    
+    border: none;
+    background-color: transparent;
 }
 
 @media (max-width: 600px) {

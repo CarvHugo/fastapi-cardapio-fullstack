@@ -1,25 +1,51 @@
-import sqlite3
+import psycopg
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+def conectar_banco_localmente():
+    nome_banco = os.getenv("DB_NAME")
+    usuario = os.getenv("DB_USER")
+    senha = os.getenv("DB_PASSWORD")
+    host = os.getenv("DB_HOST")
+    port = os.getenv("DB_PORT")
+    
+    conexao = psycopg.connect(
+        dbname=nome_banco, user=usuario, password=senha, host=host, port=port
+    )
+    
+    return conexao
+
+def conectar_banco():
+    database_url = os.getenv("DATABASE_URL")
+    conexao = psycopg.connect(database_url)
+    
+    return conexao
     
 def garantir_tabela_produtos():
-    conexao = sqlite3.connect("cardapio.db")
+    conexao = conectar_banco()
+    
     cursor = conexao.cursor()
-
+    
     cursor.execute("""
-    CREATE TABLE IF NOT EXISTS produtos (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome TEXT NOT NULL,
-        categoria TEXT NOT NULL,
-        preco REAL NOT NULL,
-        descricao TEXT NOT NULL,
-        imagem TEXT NOT NULL
-    );
+                   CREATE TABLE IF NOT EXISTS produtos (
+                    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+                    nome TEXT NOT NULL,
+                    categoria TEXT NOT NULL,
+                    preco REAL NOT NULL,
+                    descricao TEXT NOT NULL,
+                    imagem TEXT NOT NULL
+                    );
     """)
     
     conexao.commit()
     conexao.close()
 
+
 def buscar_produtos(nome=None, categoria=None, ordenar=None):
-    conexao = sqlite3.connect("cardapio.db")
+    conexao = conectar_banco()
+    
     cursor = conexao.cursor()
     
     query = "SELECT id, nome, categoria, preco, imagem, descricao FROM produtos"
@@ -29,11 +55,11 @@ def buscar_produtos(nome=None, categoria=None, ordenar=None):
     parametros = []
     
     if nome:
-        condicoes.append("nome LIKE ?")
+        condicoes.append("nome LIKE %s")
         parametros.append(f"%{nome}%")
     
     if categoria:
-        condicoes.append("categoria LIKE ?")
+        condicoes.append("categoria LIKE %s")
         parametros.append(f"%{categoria}%")
         
     if condicoes:
@@ -56,112 +82,90 @@ def buscar_produtos(nome=None, categoria=None, ordenar=None):
     
     return produtos
 
-def cadastra_produtos(nome, categoria, preco, imagem=None, descricao=None):
+def cadastra_produtos(nome, categoria, preco, imagem, descricao):
     nome = nome.strip()
     categoria = categoria.strip()
     
-    if imagem:
-        imagem = imagem.strip()
-        
-    if descricao:
-        descricao = descricao.strip()
+    imagem = imagem.strip()
     
-    conexao = sqlite3.connect("cardapio.db")
-    cursor = conexao.cursor()
+    descricao = descricao.strip()
     
     if nome != "" and categoria != "" and preco > 0 and imagem and descricao:
-        cursor.execute("INSERT INTO produtos (nome, categoria, preco, imagem, descricao) VALUES (?, ?, ?, ?, ?)", (nome, categoria, preco, imagem, descricao))
+        conexao = conectar_banco()
+        cursor = conexao.cursor()
+        
+        cursor.execute("INSERT INTO produtos (nome, categoria, preco, imagem, descricao) VALUES (%s, %s, %s, %s, %s)", (nome, categoria, preco, imagem, descricao))
 
         conexao.commit()
         conexao.close()
 
         return nome, categoria, preco, imagem, descricao
     
-    elif nome != "" and categoria != "" and preco > 0 and imagem and not descricao:
-        cursor.execute("INSERT INTO produtos (nome, categoria, preco, imagem) VALUES (?, ?, ?, ?)", (nome, categoria, preco, imagem))
-        
-        conexao.commit()
-        conexao.close()
-        
-        return nome, categoria, preco, imagem
-    
-    elif nome != "" and categoria != "" and preco > 0 and not imagem and descricao:
-            cursor.execute("INSERT INTO produtos (nome, categoria, preco, descricao) VALUES (?, ?, ?, ?)", (nome, categoria, preco, descricao))
-            
-            conexao.commit()
-            conexao.close()
-            
-            return nome, categoria, preco, descricao
-    
-    elif nome != "" and categoria != "" and preco > 0 and not imagem and not descricao:
-        cursor.execute("INSERT INTO produtos (nome, categoria, preco) VALUES (?, ?, ?)", (nome, categoria, preco))
-        
-        conexao.commit()
-        conexao.close()
-        
-        return nome, categoria, preco
+    else:
+        return {"message": "nome, categoria, preço, imagem e descrição são obrigatórios e preço não pode ser negativo!"}
     
     
 def tenta_delecao(id):
-    conexao = sqlite3.connect("cardapio.db")
+    conexao = conectar_banco()
     cursor = conexao.cursor()
-    
-    cursor.execute("SELECT * FROM produtos WHERE id = ?", (id,))
-    verificador_de_linha = cursor.fetchone()
 
-    if verificador_de_linha is not None:
-        cursor.execute("DELETE FROM produtos WHERE id = ?", (id,))
-        
-        conexao.commit()
-        conexao.close()
-        return {"message": f'{id} deletado!'}
+    cursor.execute("DELETE FROM produtos WHERE id = %s", (id,))
     
+    linha_afetada = cursor.rowcount
+    
+    if linha_afetada == 0:
+        conexao.close()
+        return None
+        
+    conexao.commit()
     conexao.close()
-    return None
+    return {"message": f'{id} deletado!'}
 
 
 def consulta_produto(id):
-    conexao = sqlite3.connect("cardapio.db")
+    conexao = conectar_banco()
     cursor = conexao.cursor()
     
-    cursor.execute("SELECT nome, categoria, preco, imagem, descricao FROM produtos WHERE id = ?;", (id,))
+    cursor.execute("SELECT nome, categoria, preco, descricao, imagem FROM produtos WHERE id = %s;", (id,))
     produto = cursor.fetchone()
     
     if produto:
-        nome, categoria, preco, imagem, descricao = produto
+        nome, categoria, preco, descricao, imagem = produto
         dados = {}
         
         dados['nome'] = nome
         dados['categoria'] = categoria
         dados['preco'] = preco
-        dados['imagem'] = imagem
         dados['descricao'] = descricao
+        dados['imagem'] = imagem
+        
+        conexao.close()
         
         return dados
+    
+    conexao.close()
     
     return None
 
 def atualiza_produto(id, nome=None, categoria=None, preco=None, imagem=None, descricao=None):
-    conexao = sqlite3.connect("cardapio.db")
+    conexao = conectar_banco()
     cursor = conexao.cursor()
     
-    if not nome or not categoria or not preco:
-        conexao.close()
-        return None
-    
-    informacoes_dos_produtos = (nome, categoria, preco, imagem, descricao)
+    informacoes_dos_produtos = (nome, categoria, preco, descricao, imagem)
     
     linhas_afetadas = 0
     
-    variavel_da_query_sql = ["nome", "categoria", "preco", "imagem", "descricao"]
+    variavel_da_query_sql = ["nome", "categoria", "preco", "descricao", "imagem"]
         
     for contador, dado in enumerate(informacoes_dos_produtos):
+        
         if dado is not None:
             cursor.execute(f"""
                            UPDATE produtos
-                           SET {variavel_da_query_sql[contador]} = ?
-                           WHERE id = ?
+                           SET {variavel_da_query_sql[contador]} = %s
+                           WHERE id = %s
                            """, (dado, id))
+            
             linhas_afetadas += cursor.rowcount
 
     if linhas_afetadas == 0:
@@ -172,5 +176,3 @@ def atualiza_produto(id, nome=None, categoria=None, preco=None, imagem=None, des
     conexao.close()
     
     return True
-    
-    
