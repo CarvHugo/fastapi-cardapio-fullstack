@@ -1,6 +1,6 @@
 import sqlite3
 from dotenv import load_dotenv
-from banco_de_dados import conectar_banco
+from banco_de_dados import conectar_banco_localmente
 
 
 load_dotenv()
@@ -16,17 +16,23 @@ cursor_sqlite.execute("""
 
 produtos = cursor_sqlite.fetchall()
 
-conexao_postgresql = conectar_banco()
+conexao_postgresql_localhost = conectar_banco_localmente()
 
-cursor_postgresql = conexao_postgresql.cursor()
+cursor_postgresql_localhost = conexao_postgresql_localhost.cursor()
 
 for produto in produtos:
-    cursor_postgresql.execute("INSERT INTO produtos (nome, categoria, preco, descricao, imagem) VALUES (%s, %s, %s, %s, %s)", (produto[0], produto[1], produto[2], produto[3], produto[4]))
+    cursor_postgresql_localhost.execute("""
+                                    INSERT 
+                                    INTO 
+                                    produtos 
+                                    (nome, categoria, preco, descricao, imagem) 
+                                    VALUES 
+                                    (%s, %s, %s, %s, %s)
+                                    """, 
+                                    (produto[0], produto[1], produto[2], produto[3], produto[4]))
 
-conexao_postgresql.commit()
-
-conexao_postgresql.close()
+conexao_postgresql_localhost.commit()
+conexao_postgresql_localhost.close()
 
 conexao_sqlite.close()
-
 print("Transferência realizada com sucesso!")
