@@ -55,11 +55,11 @@ def buscar_produtos(nome=None, categoria=None, ordenar=None):
     parametros = []
     
     if nome:
-        condicoes.append("nome LIKE %s")
+        condicoes.append("nome ILIKE %s")
         parametros.append(f"%{nome}%")
     
     if categoria:
-        condicoes.append("categoria LIKE %s")
+        condicoes.append("categoria ILIKE %s")
         parametros.append(f"%{categoria}%")
         
     if condicoes:
@@ -73,7 +73,7 @@ def buscar_produtos(nome=None, categoria=None, ordenar=None):
         
     elif ordenar == "preco":
         query += " ORDER BY preco;"
-        
+    
     cursor.execute(query, parametros)
     
     produtos = cursor.fetchall()
