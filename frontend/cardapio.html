@@ -49,16 +49,20 @@
             }
         }
 
-        function realiza_leitura_da_barra_de_pesquisa() {
-            const campo = document.getElementById("campo-busca")
-            const nome = campo.value
+        let campo = document.getElementById("campo-busca")
+        let nome = campo.value
 
-            return nome
-        }
+        campo.addEventListener("input", function () {
+        let nome = campo.value
+
+        console.log(nome)
+
+        let sugestoes = fetch(`https://fastapi-cardapio-api.onrender.com/produtos?nome=${nome}`)
+
+        return sugestoes
+        })
 
         async function busca_personalizada() {
-            const nome = realiza_leitura_da_barra_de_pesquisa()
-
             const resposta = await fetch(`https://fastapi-cardapio-api.onrender.com/produtos?nome=${nome}`)
             const dados = await resposta.json()
 
