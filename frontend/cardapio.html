@@ -43,6 +43,8 @@
 
     <script>
 
+        var produtos = []
+
         function pressionouEnter(event) {
             if (event.key === "Enter") {
                 busca_personalizada()
@@ -50,19 +52,19 @@
         }
 
         let campo = document.getElementById("campo-busca")
-        let nome = campo.value
 
-        campo.addEventListener("input", function () {
-        let nome = campo.value
+        campo.addEventListener('input', function() {
+            let nome = campo.value
 
-        console.log(nome)
-
-        let sugestoes = fetch(`https://fastapi-cardapio-api.onrender.com/produtos?nome=${nome}`)
-
-        return sugestoes
+            let sugestoes = produtos.filter((produto) => produto.nome.includes(nome))
+            
+            console.log(sugestoes)
         })
 
+
         async function busca_personalizada() {
+            let nome = campo.value
+
             const resposta = await fetch(`https://fastapi-cardapio-api.onrender.com/produtos?nome=${nome}`)
             const dados = await resposta.json()
 
@@ -112,92 +114,95 @@
     
     <script>
         async function buscar() {
-    try {
-        const resposta = await fetch("https://fastapi-cardapio-api.onrender.com/produtos");
+            try {
+                const resposta = await fetch("https://fastapi-cardapio-api.onrender.com/produtos");
 
-        if (!resposta.ok) {
-            throw new Error("Erro ao carregar os produtos!");
-        }
+                if (!resposta.ok) {
+                    throw new Error("Erro ao carregar os produtos!");
+                }
 
-        const dados = await resposta.json();
+                const dados = await resposta.json();
+                produtos.push(dados)
 
-        const div = document.getElementById("cardapio");
-        div.innerHTML = "";
+                console.log(produtos)
 
-        if (dados.length === 0) {
-            div.innerHTML = "<p>Não foi possível carregar o cardápio. Tente novamente em 40 segundos.</p>";
-            return;
-        }
+                const div = document.getElementById("cardapio");
+                div.innerHTML = "";
 
-        dados.forEach(item => {
-            let categoria = document.getElementById(`categoria-${item.categoria}`);
+                if (dados.length === 0) {
+                    div.innerHTML = "<p>Não foi possível carregar o cardápio. Tente novamente em 40 segundos.</p>";
+                    return;
+                }
 
-            if (categoria === null) {
-                div.innerHTML += `
-                    <h2 class="titulo">
-                        ${item.categoria}
-                    </h2>
+                dados.forEach(item => {
+                    let categoria = document.getElementById(`categoria-${item.categoria}`);
 
-                    <div class="categoria" id="categoria-${item.categoria}">
+                    if (categoria === null) {
+                        div.innerHTML += `
+                            <h2 class="titulo">
+                                ${item.categoria}
+                            </h2>
 
-                        <div class="produto">
-                            <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
+                            <div class="categoria" id="categoria-${item.categoria}">
 
-                            <div class="informacoes">
-                                <strong>${item.nome}</strong><br>
+                                <div class="produto">
+                                    <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
 
-                                <div class="descricao-produto">
-                                    ${item.descricao}
+                                    <div class="informacoes">
+                                        <strong>${item.nome}</strong><br>
+
+                                        <div class="descricao-produto">
+                                            ${item.descricao}
+                                        </div>
+
+                                        <p class="preco">
+                                            R$ ${Number(item.preco).toLocaleString(
+                                                "pt-BR",
+                                                { minimumFractionDigits: 2 }
+                                            )}
+                                        </p>
+                                    </div>
                                 </div>
 
-                                <p class="preco">
-                                    R$ ${Number(item.preco).toLocaleString(
-                                        "pt-BR",
-                                        { minimumFractionDigits: 2 }
-                                    )}
-                                </p>
                             </div>
-                        </div>
+                        `;
+                    }
 
-                    </div>
+                    else {
+                        categoria.innerHTML += `
+                            <div class="produto">
+                                <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
+
+                                <div class="informacoes">
+                                    <strong>${item.nome}</strong><br>
+
+                                    <div class="descricao-produto">
+                                        ${item.descricao}
+                                    </div>
+
+                                    <p class="preco">
+                                        R$ ${Number(item.preco).toLocaleString(
+                                            "pt-BR",
+                                            { minimumFractionDigits: 2 }
+                                        )}
+                                    </p>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+
+            } catch (erro) {
+                console.error(erro);
+
+                document.getElementById("cardapio").innerHTML = `
+                    <p class="erro">
+                        Não foi possível carregar o cardápio.
+                        Tente novamente mais tarde.
+                    </p>
                 `;
             }
-
-            else {
-                categoria.innerHTML += `
-                    <div class="produto">
-                        <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
-
-                        <div class="informacoes">
-                            <strong>${item.nome}</strong><br>
-
-                            <div class="descricao-produto">
-                                ${item.descricao}
-                            </div>
-
-                            <p class="preco">
-                                R$ ${Number(item.preco).toLocaleString(
-                                    "pt-BR",
-                                    { minimumFractionDigits: 2 }
-                                )}
-                            </p>
-                        </div>
-                    </div>
-                `;
-            }
-        });
-
-    } catch (erro) {
-        console.error(erro);
-
-        document.getElementById("cardapio").innerHTML = `
-            <p class="erro">
-                Não foi possível carregar o cardápio.
-                Tente novamente mais tarde.
-            </p>
-        `;
-    }
-}
+        }
     </script>
 </body>
 </html>
