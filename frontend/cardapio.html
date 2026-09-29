@@ -56,7 +56,7 @@
         campo.addEventListener('input', function() {
             let nome = campo.value
 
-            let sugestoes = produtos.filter((produto) => produto.nome.includes(nome))
+            let sugestoes = produtos.filter((produto) => produto.nome.toLowerCase().includes(nome.toLowerCase()))
             
             console.log(sugestoes)
         })
@@ -122,7 +122,7 @@
                 }
 
                 const dados = await resposta.json();
-                produtos.push(dados)
+                produtos.push(...dados)
 
                 console.log(produtos)
 
