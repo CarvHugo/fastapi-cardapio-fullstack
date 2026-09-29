@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Cardápio</title>
 </head>
-<body id="pagina-cardapio" onload="buscar()">
+<body id="pagina-cardapio" onload="carrega_produtos()">
     <header>
         <nav class="menu-de-navegacao">
             <nav class="logotipo">
@@ -29,7 +29,7 @@
                 onkeydown="pressionouEnter(event)"
             >
 
-            <button onclick="busca_personalizada()">
+            <button onclick="buscar()">
                 Buscar
             </button>
         
@@ -47,7 +47,7 @@
 
         function pressionouEnter(event) {
             if (event.key === "Enter") {
-                busca_personalizada()
+                buscar()
             }
         }
 
@@ -62,7 +62,7 @@
         })
 
 
-        function busca_personalizada() {
+        function buscar() {
             let nome = campo.value
 
             let resposta = produtos.filter((produto) => produto.nome.toLowerCase().includes(nome.toLowerCase())) 
@@ -113,7 +113,7 @@
     </script>
     
     <script>
-        async function buscar() {
+        async function carrega_produtos() {
             try {
                 const resposta = await fetch("https://fastapi-cardapio-api.onrender.com/produtos");
 
