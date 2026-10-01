@@ -39,6 +39,10 @@
         
         </section>
 
+        <section onclick="fechar_modal()" class="modal" id="modal">
+
+        </section>
+
     </main>
 
     <script>
@@ -62,6 +66,34 @@
         })
 
 
+        function abrir_modal(item) {
+            const modal = document.getElementById("modal")
+
+            modal.innerHTML = `
+                            <div class="modal-container">
+                                <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
+                                
+                                <div class="informacoes">
+                                    <strong>${item.nome}</strong><br>
+
+                                    <div class="descricao-produto">
+                                        ${item.descricao}
+                                    </div>
+
+                                    <p class="preco">
+                                        R$ ${Number(item.preco).toLocaleString(
+                                            "pt-BR",
+                                            { minimumFractionDigits: 2 }
+                                        )}
+                                    </p>
+                                </div>
+                            </div>`
+
+            modal.classList.add("aberto")
+        }
+
+        
+
         function buscar() {
             let nome = campo.value
 
@@ -70,14 +102,6 @@
 
             const div = document.getElementById("cardapio");
             div.innerHTML = "";
-            
-            if (dados.length === 0) {
-                div.innerHTML = `
-                <div class="erro">
-                    <p>Não foi possível encontrar o alimento "${nome}".</p>
-                </div>`
-                return;
-            }
 
             div.innerHTML = `
                 <div class="categoria"></div>
@@ -145,7 +169,7 @@
 
                             <div class="categoria" id="categoria-${item.categoria}">
 
-                                <div class="produto">
+                                <div class="produto" data-id="${item.id}">
                                     <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
 
                                     <div class="informacoes">
@@ -163,14 +187,13 @@
                                         </p>
                                     </div>
                                 </div>
-
                             </div>
                         `;
                     }
 
                     else {
                         categoria.innerHTML += `
-                            <div class="produto">
+                            <div class="produto" data-id="${item.id}">
                                 <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
 
                                 <div class="informacoes">
