@@ -82,13 +82,24 @@ main h1 {
     height: 100%;
 }
 
+.modal.aberto img {
+    max-width: 400px;
+    height: auto;
+
+    padding: 30px;
+}
+
 .modal-container {
-    background-color: white;
-    height: 700px;
+    background-color: rgb(236, 232, 232);
+    height: 600px;
     width: 700px;
 
     justify-content: center;
     align-items: center;
+    
+    padding: 15px;
+
+    border-radius: 5%;
 }
 
 .produto {
@@ -108,8 +119,8 @@ main h1 {
 }
 
 .produto img {
-    width: 150px;
-    height: 100px;
+    max-width: 150px;
+    max-height: 100px;
     border-radius: 10px;
 }
 
