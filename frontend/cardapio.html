@@ -92,7 +92,13 @@
             modal.classList.add("aberto")
         }
 
-        
+        function cliquei_no_produto(elemento) {
+            const id = elemento.dataset.id
+
+            const produto = produtos.find(p => p.id == id)
+
+            abrir_modal(produto)
+        }
 
         function buscar() {
             let nome = campo.value
@@ -169,7 +175,7 @@
 
                             <div class="categoria" id="categoria-${item.categoria}">
 
-                                <div class="produto" data-id="${item.id}">
+                                <div onclick="cliquei_no_produto(this)" class="produto" data-id="${item.id}">
                                     <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
 
                                     <div class="informacoes">
@@ -193,7 +199,7 @@
 
                     else {
                         categoria.innerHTML += `
-                            <div class="produto" data-id="${item.id}">
+                            <div onclick="cliquei_no_produto(this)" class="produto" data-id="${item.id}">
                                 <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
 
                                 <div class="informacoes">
@@ -226,6 +232,12 @@
                 `;
             }
         }
+
+        function fechar_modal() {
+            const modal = document.getElementById("modal")
+            modal.classList.remove("aberto")
+        }
+
     </script>
 </body>
 </html>
