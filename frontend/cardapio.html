@@ -147,46 +147,6 @@
             abrir_modal(produto)
         }
 
-        function buscar() {
-            let nome = campo.value
-
-            let resposta = produtos.filter((produto) => produto.nome.toLowerCase().includes(nome.toLowerCase())) 
-            const dados = resposta
-
-            const div = document.getElementById("cardapio");
-            div.innerHTML = "";
-
-            div.innerHTML = `
-                <div class="categoria"></div>
-            `;
-
-            const categoria = document.querySelector(".categoria");
-
-            dados.forEach(item => {
-                categoria.innerHTML += `
-                    <div class="produto">
-                        <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
-                            
-                            <div class="informacoes">
-                                <strong>${item.nome}</strong><br>
-
-                                <div class="descricao-produto">
-                                    ${item.descricao}
-                                </div>
-
-                                <p class="preco">
-                                    R$ ${Number(item.preco).toLocaleString(
-                                        "pt-BR",
-                                        { minimumFractionDigits: 2 }
-                                    )}
-                                </p>
-                            </div>
-                    </div>
-                `;   
-            });
-
-        }
-
     </script>
     
     <script>
