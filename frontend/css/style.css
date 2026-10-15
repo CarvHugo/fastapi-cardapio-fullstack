@@ -69,41 +69,61 @@ main h1 {
 .modal.aberto {
     display: flex;
     position: fixed;
-    top: 0;
-    left: 0;
-
+    inset: 0;
     justify-content: center;
     align-items: center;
-
     z-index: 1000;
-
-    background: rgba(0, 0, 0, 0.7);
-    width: 100%;
-    height: 100%;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.75);
 
     cursor: pointer;
 }
 
-.modal.aberto img {
-    max-width: 400px;
-    height: auto;
-
+.modal-container {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    background-color: #f8f5ef;
+    width: 800px;
+    max-width: 100%;
+    min-height: 350px;
     padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
 }
 
-.modal-container {
-    background-color: rgb(236, 232, 232);
-    height: 600px;
-    width: 700px;
+.modal-container .imagem-produto {
+    width: 320px;
+    height: 280px;
+    flex-shrink: 0;
+    object-fit: cover;
+    padding: 0;
+    margin: 0;
+    border-radius: 12px;
+}
 
-    justify-content: center;
-    align-items: center;
-    
-    padding: 15px;
+.modal-container .informacoes {
+    flex: 1;
+    min-width: 0;
+}
 
-    border-radius: 5%;
+.modal-container .informacoes strong {
+    font-size: 26px;
+    line-height: 1.3;
+    color: #33251e;
+}
 
-    cursor: default;
+.modal-container .descricao-produto {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #5e554e;
+}
+
+.modal-container .preco {
+    font-size: 23px;
+    font-weight: bold;
+    color: #276738;
+    margin-top: 15px;
 }
 
 .produto {
