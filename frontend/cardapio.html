@@ -69,6 +69,12 @@
         function abrir_modal(item) {
             const modal = document.getElementById("modal")
 
+            modal.onclick = function(event) {
+                if (event.target === modal) {
+                    fechar_modal();
+                }
+            };
+
             modal.innerHTML = `
                             <div class="modal-container">
                                 <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
