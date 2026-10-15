@@ -28,11 +28,11 @@
                 id="campo-busca"
                 onkeydown="pressionouEnter(event)"
             >
-
-            <button onclick="buscar()">
-                Buscar
-            </button>
         
+        </section>
+
+        <section class="sugestoes">
+
         </section>
 
         <section id="cardapio">
@@ -55,15 +55,56 @@
             }
         }
 
-        let campo = document.getElementById("campo-busca")
+        
+        const campo = document.getElementById("campo-busca");
+        const areaSugestoes = document.querySelector(".sugestoes");
 
-        campo.addEventListener('input', function() {
-            let nome = campo.value
+        campo.addEventListener("input", function() {
+            const nome = campo.value.trim().toLowerCase();
 
-            let sugestoes = produtos.filter((produto) => produto.nome.toLowerCase().includes(nome.toLowerCase()))
-            
-            console.log(sugestoes)
-        })
+            areaSugestoes.innerHTML = "";
+
+            if (nome === "") {
+                areaSugestoes.style.display = "none";
+                return;
+            }
+
+            const sugestoes = produtos
+                .filter(produto =>
+                    produto.nome.toLowerCase().includes(nome)
+                )
+                .slice(0, 5);
+
+            if (sugestoes.length === 0) {
+                areaSugestoes.style.display = "none";
+                return;
+            }
+
+            areaSugestoes.style.display = "flex";
+
+            sugestoes.forEach(produto => {
+                const item = document.createElement("div");
+                item.classList.add("sugestao-item");
+
+                const imagem = document.createElement("img");
+                imagem.src = `imagens/produtos/${produto.imagem}`;
+                imagem.alt = produto.nome;
+
+                const nomeProduto = document.createElement("span");
+                nomeProduto.textContent = produto.nome;
+
+                item.appendChild(imagem);
+                item.appendChild(nomeProduto);
+
+                item.addEventListener("click", function() {
+                    campo.value = produto.nome;
+                    areaSugestoes.style.display = "none";
+                    abrir_modal(produto);
+                });
+
+                areaSugestoes.appendChild(item);
+            });
+        });
 
 
         function abrir_modal(item) {
@@ -159,8 +200,6 @@
 
                 const dados = await resposta.json();
                 produtos.push(...dados)
-
-                console.log(produtos)
 
                 const div = document.getElementById("cardapio");
                 div.innerHTML = "";

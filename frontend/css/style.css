@@ -202,6 +202,43 @@ body button {
     width: 100px;
 }
 
+.sugestoes {
+    display: none;
+    flex-direction: column;
+    width: 460px;
+    margin: 0 15px;
+    background-color: #f8eeee;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+
+    position: absolute;
+}
+
+.sugestao-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+}
+
+.sugestao-item:hover {
+    background-color: #e8dfdf;
+}
+
+.sugestao-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.sugestao-item span {
+    font-size: 15px;
+}
+
 .menu-de-navegacao {
     position: static;
     top: 0;
