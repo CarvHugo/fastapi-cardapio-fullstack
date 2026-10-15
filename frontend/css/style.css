@@ -112,8 +112,8 @@ main h1 {
 
     align-items: center;
     display: flex;
-    width: 300px;
-    min-height: 200px;
+    width: 330px;
+    max-height: 340px;
     background-color: rgba(248, 238, 238, 0.938);
     padding: 25px;
     margin: 15px;
@@ -123,8 +123,10 @@ main h1 {
 }
 
 .produto img {
-    max-width: 150px;
-    max-height: 100px;
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    flex-shrink: 0;
     border-radius: 10px;
 }
 
