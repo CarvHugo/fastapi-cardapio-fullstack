@@ -518,6 +518,30 @@ html {
 }
 
 @media (max-width: 600px) {
+    .modal.aberto {
+        padding: 15px;
+        overflow-y: auto;
+    }
+
+    .modal-container {
+        flex-direction: column;
+        width: 100%;
+        min-height: auto;
+        gap: 20px;
+        padding: 20px;
+        margin: auto 0;
+    }
+
+    .modal-container .imagem-produto {
+        width: 100%;
+        max-width: 320px;
+        height: 220px;
+    }
+
+    .modal-container .informacoes strong {
+        font-size: 22px;
+    }
+
     .produto {
         width: 100%;
         box-sizing: border-box;
