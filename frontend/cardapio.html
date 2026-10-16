@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Cardápio</title>
 </head>
-<body id="pagina-cardapio" onload="buscar()">
+<body id="pagina-cardapio" onload="carrega_produtos()">
     <header>
         <nav class="menu-de-navegacao">
             <nav class="logotipo">
@@ -28,166 +28,221 @@
                 id="campo-busca"
                 onkeydown="pressionouEnter(event)"
             >
-
-            <button onclick="busca_personalizada()">
-                Buscar
-            </button>
         
+        </section>
+
+        <section class="sugestoes">
+
         </section>
 
         <section id="cardapio">
         
         </section>
 
+        <section class="modal" id="modal">
+
+        </section>
+
     </main>
 
     <script>
 
+        var produtos = []
+
         function pressionouEnter(event) {
             if (event.key === "Enter") {
-                busca_personalizada()
+                buscar()
             }
         }
 
-        async function busca_personalizada() {
-            const campo = document.getElementById("campo-busca")
-            const nome = campo.value
+        
+        const campo = document.getElementById("campo-busca");
+        const areaSugestoes = document.querySelector(".sugestoes");
 
-            const resposta = await fetch(`https://fastapi-cardapio-api.onrender.com/produtos?nome=${nome}`)
-            const dados = await resposta.json()
+        campo.addEventListener("input", function() {
+            const nome = campo.value.trim().toLowerCase();
 
-            const div = document.getElementById("cardapio");
-            div.innerHTML = "";
-            
-            if (dados.length === 0) {
-                div.innerHTML = `
-                <div class="erro">
-                    <p>Não foi possível encontrar o alimento "${nome}".</p>
-                </div>`
+            areaSugestoes.innerHTML = "";
+
+            if (nome === "") {
+                areaSugestoes.style.display = "none";
                 return;
             }
 
-            div.innerHTML = `
-                <div class="categoria"></div>
-            `;
+            const sugestoes = produtos
+                .filter(produto =>
+                    produto.nome.toLowerCase().includes(nome)
+                )
+                .slice(0, 5);
 
-            const categoria = document.querySelector(".categoria");
+            if (sugestoes.length === 0) {
+                areaSugestoes.style.display = "none";
+                return;
+            }
 
-            dados.forEach(item => {
-                categoria.innerHTML += `
-                    <div class="produto">
-                        <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
-                            
-                            <div class="informacoes">
-                                <strong>${item.nome}</strong><br>
+            areaSugestoes.style.display = "flex";
 
-                                <div class="descricao-produto">
-                                    ${item.descricao}
-                                </div>
+            sugestoes.forEach(produto => {
+                const item = document.createElement("div");
+                item.classList.add("sugestao-item");
 
-                                <p class="preco">
-                                    R$ ${Number(item.preco).toLocaleString(
-                                        "pt-BR",
-                                        { minimumFractionDigits: 2 }
-                                    )}
-                                </p>
-                            </div>
-                    </div>
-                `;   
+                const imagem = document.createElement("img");
+                imagem.src = `imagens/produtos/${produto.imagem}`;
+                imagem.alt = produto.nome;
+
+                const nomeProduto = document.createElement("span");
+                nomeProduto.textContent = produto.nome;
+
+                item.appendChild(imagem);
+                item.appendChild(nomeProduto);
+
+                item.addEventListener("click", function() {
+                    campo.value = produto.nome;
+                    areaSugestoes.style.display = "none";
+                    abrir_modal(produto);
+                });
+
+                areaSugestoes.appendChild(item);
             });
+        });
 
+
+        function abrir_modal(item) {
+            const modal = document.getElementById("modal")
+
+            modal.onclick = function(event) {
+                if (event.target === modal) {
+                    fechar_modal();
+                }
+            };
+
+            modal.innerHTML = `
+                            <div class="modal-container">
+                                <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
+                                
+                                <div class="informacoes">
+                                    <strong>${item.nome}</strong><br>
+
+                                    <div class="descricao-produto">
+                                        ${item.descricao}
+                                    </div>
+
+                                    <p class="preco">
+                                        R$ ${Number(item.preco).toLocaleString(
+                                            "pt-BR",
+                                            { minimumFractionDigits: 2 }
+                                        )}
+                                    </p>
+                                </div>
+                            </div>`
+
+            modal.classList.add("aberto")
+        }
+
+        function cliquei_no_produto(elemento) {
+            const id = elemento.dataset.id
+
+            const produto = produtos.find(p => p.id == id)
+
+            abrir_modal(produto)
         }
 
     </script>
     
     <script>
-        async function buscar() {
-    try {
-        const resposta = await fetch("https://fastapi-cardapio-api.onrender.com/produtos");
+        async function carrega_produtos() {
+            try {
+                const resposta = await fetch("https://fastapi-cardapio-api.onrender.com/produtos");
 
-        if (!resposta.ok) {
-            throw new Error("Erro ao carregar os produtos!");
-        }
+                if (!resposta.ok) {
+                    throw new Error("Erro ao carregar os produtos!");
+                }
 
-        const dados = await resposta.json();
+                const dados = await resposta.json();
+                produtos.push(...dados)
 
-        const div = document.getElementById("cardapio");
-        div.innerHTML = "";
+                const div = document.getElementById("cardapio");
+                div.innerHTML = "";
 
-        if (dados.length === 0) {
-            div.innerHTML = "<p>Não foi possível carregar o cardápio. Tente novamente em 40 segundos.</p>";
-            return;
-        }
+                if (dados.length === 0) {
+                    div.innerHTML = "<p>Não foi possível carregar o cardápio. Tente novamente em 40 segundos.</p>";
+                    return;
+                }
 
-        dados.forEach(item => {
-            let categoria = document.getElementById(`categoria-${item.categoria}`);
+                dados.forEach(item => {
+                    let categoria = document.getElementById(`categoria-${item.categoria}`);
 
-            if (categoria === null) {
-                div.innerHTML += `
-                    <h2 class="titulo">
-                        ${item.categoria}
-                    </h2>
+                    if (categoria === null) {
+                        div.innerHTML += `
+                            <h2 class="titulo">
+                                ${item.categoria}
+                            </h2>
 
-                    <div class="categoria" id="categoria-${item.categoria}">
+                            <div class="categoria" id="categoria-${item.categoria}">
 
-                        <div class="produto">
-                            <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
+                                <div onclick="cliquei_no_produto(this)" class="produto" data-id="${item.id}">
+                                    <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
 
-                            <div class="informacoes">
-                                <strong>${item.nome}</strong><br>
+                                    <div class="informacoes">
+                                        <strong>${item.nome}</strong><br>
 
-                                <div class="descricao-produto">
-                                    ${item.descricao}
+                                        <div class="descricao-produto">
+                                            ${item.descricao}
+                                        </div>
+
+                                        <p class="preco">
+                                            R$ ${Number(item.preco).toLocaleString(
+                                                "pt-BR",
+                                                { minimumFractionDigits: 2 }
+                                            )}
+                                        </p>
+                                    </div>
                                 </div>
-
-                                <p class="preco">
-                                    R$ ${Number(item.preco).toLocaleString(
-                                        "pt-BR",
-                                        { minimumFractionDigits: 2 }
-                                    )}
-                                </p>
                             </div>
-                        </div>
+                        `;
+                    }
 
-                    </div>
+                    else {
+                        categoria.innerHTML += `
+                            <div onclick="cliquei_no_produto(this)" class="produto" data-id="${item.id}">
+                                <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
+
+                                <div class="informacoes">
+                                    <strong>${item.nome}</strong><br>
+
+                                    <div class="descricao-produto">
+                                        ${item.descricao}
+                                    </div>
+
+                                    <p class="preco">
+                                        R$ ${Number(item.preco).toLocaleString(
+                                            "pt-BR",
+                                            { minimumFractionDigits: 2 }
+                                        )}
+                                    </p>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+
+            } catch (erro) {
+                console.error(erro);
+
+                document.getElementById("cardapio").innerHTML = `
+                    <p class="erro">
+                        Não foi possível carregar o cardápio.
+                        Tente novamente mais tarde.
+                    </p>
                 `;
             }
+        }
 
-            else {
-                categoria.innerHTML += `
-                    <div class="produto">
-                        <img class="imagem-produto" src="imagens/produtos/${item.imagem}">
+        function fechar_modal() {
+            const modal = document.getElementById("modal")
+            modal.classList.remove("aberto")
+        }
 
-                        <div class="informacoes">
-                            <strong>${item.nome}</strong><br>
-
-                            <div class="descricao-produto">
-                                ${item.descricao}
-                            </div>
-
-                            <p class="preco">
-                                R$ ${Number(item.preco).toLocaleString(
-                                    "pt-BR",
-                                    { minimumFractionDigits: 2 }
-                                )}
-                            </p>
-                        </div>
-                    </div>
-                `;
-            }
-        });
-
-    } catch (erro) {
-        console.error(erro);
-
-        document.getElementById("cardapio").innerHTML = `
-            <p class="erro">
-                Não foi possível carregar o cardápio.
-                Tente novamente mais tarde.
-            </p>
-        `;
-    }
-}
     </script>
 </body>
 </html>
