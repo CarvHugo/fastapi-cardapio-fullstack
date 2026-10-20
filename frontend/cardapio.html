@@ -26,7 +26,6 @@
             <input
                 type="text"
                 id="campo-busca"
-                onkeydown="pressionouEnter(event)"
             >
         
         </section>
@@ -48,13 +47,6 @@
     <script>
 
         var produtos = []
-
-        function pressionouEnter(event) {
-            if (event.key === "Enter") {
-                buscar()
-            }
-        }
-
         
         const campo = document.getElementById("campo-busca");
         const areaSugestoes = document.querySelector(".sugestoes");
